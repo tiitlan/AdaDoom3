@@ -721,92 +721,97 @@ package body Implementation_For_Architecture
       Stack                : aliased array(1..8) of Float_8_Real := (others => 0.0);
       Environment          : aliased Record_x86_Environment      := (others => <>);
       begin
-        Asm(
-          ---------------------------------------------
-          "   movl    %%eax,       %%esi " & END_LINE &
-          "   fnstenv (%%esi)            " & END_LINE &
-          "   movl    8(%%esi),    %%esi " & END_LINE &
-          "   xor     $0xffffffff, %%esi " & END_LINE &
-          "   movl    $0x0000c000, %%edx " & END_LINE &
-          "   xor     %%eax,       %%eax " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fst     (%%edi)            " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(1)            " & END_LINE &
-          "   fst     8(%%edi)           " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(1)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(2)            " & END_LINE &
-          "   fst     16(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(2)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(3)            " & END_LINE &
-          "   fst     24(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(3)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(4)            " & END_LINE &
-          "   fst     32(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(4)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(5)            " & END_LINE &
-          "   fst     40(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(5)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(6)            " & END_LINE &
-          "   fst     48(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(6)            " & END_LINE &
-          "   shr     $2,          %%edx " & END_LINE &
-          "   movl    %%esi,       %%ecx " & END_LINE &
-          "   and     %%edx,       %%ecx " & END_LINE &
-          "   jz      fin                " & END_LINE &
-          ---------------------------------------------
-          "   fxch    %%st(7)            " & END_LINE &
-          "   fst     56(%%edi)          " & END_LINE &
-          "   inc     %%eax              " & END_LINE &
-          "   fxch    %%st(7)            " & END_LINE &
-          ---------------------------------------------
-          " fin:                         " & END_LINE ,
-          ---------------------------------------------
-          Volatile => True,
-          Inputs =>(
-            Address'Asm_Input(TO_EAX, Environment'Address),
-            Address'Asm_Input(TO_EDI, Stack'Address)),
-          Outputs =>
-            Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
+-- SOMETHING IN THIS ASM BLOCK CAUSES AN ERROR:
+--    Execution terminated by unhandled exception
+--    Exception name: PROGRAM_ERROR
+--    Message: EXCEPTION_ACCESS_VIOLATION
+--          Asm(
+--            ---------------------------------------------
+--            "   movl    %%eax,       %%esi " & END_LINE &
+--            "   fnstenv (%%esi)            " & END_LINE &
+--            "   movl    8(%%esi),    %%esi " & END_LINE &
+--            "   xor     $0xffffffff, %%esi " & END_LINE &
+--            "   movl    $0x0000c000, %%edx " & END_LINE &
+--            "   xor     %%eax,       %%eax " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fst     (%%edi)            " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(1)            " & END_LINE &
+--            "   fst     8(%%edi)           " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(1)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(2)            " & END_LINE &
+--            "   fst     16(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(2)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(3)            " & END_LINE &
+--            "   fst     24(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(3)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(4)            " & END_LINE &
+--            "   fst     32(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(4)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(5)            " & END_LINE &
+--            "   fst     40(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(5)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(6)            " & END_LINE &
+--            "   fst     48(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(6)            " & END_LINE &
+--            "   shr     $2,          %%edx " & END_LINE &
+--            "   movl    %%esi,       %%ecx " & END_LINE &
+--            "   and     %%edx,       %%ecx " & END_LINE &
+--            "   jz      fin                " & END_LINE &
+--            ---------------------------------------------
+--            "   fxch    %%st(7)            " & END_LINE &
+--            "   fst     56(%%edi)          " & END_LINE &
+--            "   inc     %%eax              " & END_LINE &
+--            "   fxch    %%st(7)            " & END_LINE &
+--            ---------------------------------------------
+--            " fin:                         " & END_LINE ,
+--            ---------------------------------------------
+--            Volatile => True,
+--            Inputs =>(
+--              Address'Asm_Input(TO_EAX, Environment'Address),
+--              Address'Asm_Input(TO_EDI, Stack'Address)),
+--            Outputs =>
+--        Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
+GOTO ENDING;
         if Number_Of_Values <= Stack'Size then
           for I in 1..Integer(Number_Of_Values) loop
             Put_Line("Stack" & Integer'Wide_Image(I) & ": " & Float_8_Real'Wide_Image(Stack(I)));
@@ -827,5 +832,5 @@ package body Implementation_For_Architecture
         Put_Line("Data selector: "   & To_Image(Environment.Data_Selector,   2));
         Put_Line("Operation code: "  & To_Image(Environment.Operation_Code,  2));
         Put_Line("Program counter: " & To_Image(Environment.Program_Counter, 2));
-      end Put_Stack;
-  end Implementation_For_Architecture;
+<<ENDING>>
+Put_Line( "Put_Stack has been disabled due to ASM bug." );
