@@ -834,3 +834,5 @@ GOTO ENDING;
         Put_Line("Program counter: " & To_Image(Environment.Program_Counter, 2));
 <<ENDING>>
 Put_Line( "Put_Stack has been disabled due to ASM bug." );
+      end Put_Stack;
+  end Implementation_For_Architecture;
