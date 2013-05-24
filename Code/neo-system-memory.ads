@@ -1,5 +1,5 @@
---                                                                                                                      
---                                                                                                                      
+--
+--
 --
 --
 --
@@ -27,60 +27,49 @@ use
   Neo.Foundation.Text_IO,
   Neo.Foundation.Data_Types,
   Neo.Foundation.Package_Testing;
-package Neo.System.Memory -- Memory allocation, all in one place
+package Neo.System.Memory
   is
-  -------------
-  -- Numbers --
-  -------------
-    type Integer_Memory_Identifier
-      is new Integer_1_Unsigned;
   -------------
   -- Records --
   -------------
-    type Record_Memory
+    type Record_State
       is record
-        Load                       : Float_4_Percent;
-        Physical_Total             : Integer_8_Natural;
-        Physical_Available         : Integer_8_Natural;
-        Page_File_Total            : Integer_8_Natural;
-        Page_File_Available        : Integer_8_Natural;
-        Virtual_Total              : Integer_8_Natural;
-        Virtual_Available          : Integer_8_Natural;
-        Virtual_Available_Extended : Integer_8_Natural;
+        Load                                       : Float_4_Percent    := 0.0;
+        Number_Of_Disk_Bytes_Total                 : Integer_8_Unsigned := 0;
+        Number_Of_Disk_Bytes_Available             : Integer_8_Unsigned := 0;
+        Number_Of_Physical_Bytes_Total             : Integer_8_Unsigned := 0;
+        Number_Of_Physical_Bytes_Available         : Integer_8_Unsigned := 0;
+        Number_Of_Page_File_Bytes_Total            : Integer_8_Unsigned := 0;
+        Number_Of_Page_File_Bytes_Available        : Integer_8_Unsigned := 0;
+        Number_Of_Virtual_Bytes_Total              : Integer_8_Unsigned := 0;
+        Number_Of_Virtual_Bytes_Available          : Integer_8_Unsigned := 0;
+        Number_Of_Virtual_Bytes_Available_Extended : Integer_8_Unsigned := 0;
       end record;
-  ---------------
-  -- Constants --
-  ---------------
-    CLEARED_MEMORY_VALUE  : constant Boolean                   := False;
-    UNASSIGNED_IDENTIFIER : constant Integer_Memory_Identifier := 0;
-    MEMORY_ALIGNMENT      : constant Integer_4_Unsigned        := 16;
+  --------------
+  -- Packages --
+  --------------
+    generic
+      type Type_To_Manage
+        is private;
+    package Manager
+      is
+        procedure Lock(
+          Item : in out Type_To_Manage);
+        procedure Unlock(
+          Item : in out Type_To_Manage);
+      end Manager;
   -----------------
   -- Subprograms --
   -----------------
     procedure Test;
     procedure Set_Byte_Limits(
-      Minimum : in Integer_4_Unsigned;
-      Maximum : in Integer_4_Unsigned);
-    function Get_Data
-      return Record_Memory;
-    function Lock(
-      Location        : in Address;
-      Number_Of_Bytes : in Integer_4_Unsigned)
-      return Boolean;
-    function Unlock(
-      Location        : in Address;
-      Number_Of_Bytes : in Integer_4_Unsigned)
-      return Boolean;
-    function Allocate(
-      Number_Of_Bits    : in Integer_4_Unsigned;
-      Memory_Identifier : in Integer_Memory_Identifier := UNASSIGNED_IDENTIFIER)
-      return Address;
-    function Allocate_Dirty(
-      Number_Of_Bits    : in Integer_4_Unsigned;
-      Memory_Identifier : in Integer_Memory_Identifier := UNASSIGNED_IDENTIFIER)
-      return Address;
-    procedure Free(
-      Item : in Address);
+      Minimum : in Integer_8_Unsigned;
+      Maximum : in Integer_8_Unsigned)
+      with Pre => Minimum < Maximum;
+    function Get_State
+      return Record_State;
+    function Get_State_At_Launch
+      return Record_State;
 -------
 private
 -------
@@ -89,29 +78,17 @@ private
   --------------------
     package Implementation
       is
-        function Get
-          return Record_Memory;
+        function Get_State
+          return Record_State;
         procedure Set_Byte_Limits(
-          Minimum : in Integer_4_Unsigned;
-          Maximum : in Integer_4_Unsigned);
-        function Lock(
+          Minimum : in Integer_8_Unsigned;
+          Maximum : in Integer_8_Unsigned)
+          with Pre => Minimum < Maximum;
+        procedure Lock(
           Location        : in Address;
-          Number_Of_Bytes : in Integer_4_Unsigned)
-          return Boolean;
-        function Unlock(
+          Number_Of_Bytes : in Integer_8_Unsigned);
+        procedure Unlock(
           Location        : in Address;
-          Number_Of_Bytes : in Integer_4_Unsigned)
-          return Boolean;
-        function Clear(
-          Location      : in Address;
-          Size          : in Integer_4_Unsigned;
-          Initial_Value : in Boolean := CLEARED_MEMORY_VALUE)
-          return Address;
-        function Allocate(
-          Size      : in Integer_4_Unsigned;
-          Alignment : in Integer_4_Unsigned)
-          return Address;
-        procedure Free(
-          Data : in Address);
+          Number_Of_Bytes : in Integer_8_Unsigned);
       end Implementation;
   end Neo.System.Memory;

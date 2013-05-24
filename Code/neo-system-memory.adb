@@ -1,5 +1,5 @@
---                                                                                                                      
---                                                                                                                      
+--
+--
 --
 --
 --
@@ -21,90 +21,85 @@ package body Neo.System.Memory
   --------------------
     package body Implementation
       is separate;
+  -------------
+  -- Manager --
+  -------------
+    package body Manager
+      is
+        procedure Lock(
+          Item : in out Type_To_Manage)
+          is
+          begin
+            Implementation.Lock(Item'Address, Item'Size / Byte'Size);
+          exception
+            when System_Call_Failure =>
+              null;
+          end Lock;
+        procedure Unlock(
+          Item : in out Type_To_Manage)
+          is
+          begin
+            Implementation.Unlock(Item'Address, Item'Size / Byte'Size);
+          exception
+            when System_Call_Failure =>
+              null;
+          end Unlock;
+      end Manager;
   ----------
   -- Test --
   ----------
     procedure Test
       is
-      Memory : Record_Memory := (others => <>);
+      State : Record_State := (others => <>); -- Get_State is called after for Put_Title, instead of here, for testing purposes
       begin
         Put_Title("MEMORY TEST");
-        Memory := Get_Data;
-        Put_Line("Load"                       & Float_4_Percent'Wide_Image(Memory.Load));
-        Put_Line("Physical_Total"             & Integer_8_Natural'Wide_Image(Memory.Physical_Total));
-        Put_Line("Physical_Available"         & Integer_8_Natural'Wide_Image(Memory.Physical_Available));
-        Put_Line("Page_File_Total"            & Integer_8_Natural'Wide_Image(Memory.Page_File_Total));
-        Put_Line("Page_File_Available"        & Integer_8_Natural'Wide_Image(Memory.Page_File_Available));
-        Put_Line("Virtual_Total"              & Integer_8_Natural'Wide_Image(Memory.Virtual_Total));
-        Put_Line("Virtual_Available"          & Integer_8_Natural'Wide_Image(Memory.Virtual_Available));
-        Put_Line("Virtual_Available_Extended" & Integer_8_Natural'Wide_Image(Memory.Virtual_Available_Extended));
+        State := Get_State;
+        Put_Line("Load: "                       & Float_4_Percent'Wide_Image(State.Load));
+        Put_Line("Disk total: "                 & Integer_8_Unsigned'Wide_Image(State.Number_Of_Disk_Bytes_Total));
+        Put_Line("Disk available: "             & Integer_8_Unsigned'Wide_Image(State.Number_Of_Disk_Bytes_Available));
+        Put_Line("Physical total: "             & Integer_8_Unsigned'Wide_Image(State.Number_Of_Physical_Bytes_Total));
+        Put_Line("Physical available: "         & Integer_8_Unsigned'Wide_Image(State.Number_Of_Physical_Bytes_Available));
+        Put_Line("Page file total: "            & Integer_8_Unsigned'Wide_Image(State.Number_Of_Page_File_Bytes_Total));
+        Put_Line("Page file available: "        & Integer_8_Unsigned'Wide_Image(State.Number_Of_Page_File_Bytes_Available));
+        Put_Line("Virtual total: "              & Integer_8_Unsigned'Wide_Image(State.Number_Of_Virtual_Bytes_Total));
+        Put_Line("Virtual available: "          & Integer_8_Unsigned'Wide_Image(State.Number_Of_Virtual_Bytes_Available));
+        Put_Line("Virtual available extended: " & Integer_8_Unsigned'Wide_Image(State.Number_Of_Virtual_Bytes_Available_Extended));
         Hang_Window;
       end Test;
   ---------------------
   -- Set_Byte_Limits --
   ---------------------
     procedure Set_Byte_Limits(
-      Minimum : in Integer_4_Unsigned;
-      Maximum : in Integer_4_Unsigned)
-      renames Implementation.Set_Byte_Limits;
-  --------------
-  -- Get_Data --
-  --------------
-    function Get_Data
-      return Record_Memory
-      renames Implementation.Get;
-  ----------
-  -- Lock --
-  ----------
-    function Lock(
-      Location        : in Address;
-      Number_Of_Bytes : in Integer_4_Unsigned)
-      return Boolean
-      renames Implementation.Lock;
-  ------------
-  -- Unlock --
-  ------------
-    function Unlock(
-      Location        : in Address;
-      Number_Of_Bytes : in Integer_4_Unsigned)
-      return Boolean
-      renames Implementation.Unlock;
-  ----------
-  -- Free --
-  ----------
-    procedure Free(
-      Item : in Address)
-      renames Implementation.Free;
-  --------------
-  -- Allocate --
-  --------------
-    function Allocate(
-      Number_Of_Bits    : in Integer_4_Unsigned;
-      Memory_Identifier : in Integer_Memory_Identifier := UNASSIGNED_IDENTIFIER)
-      return Address
+      Minimum : in Integer_8_Unsigned;
+      Maximum : in Integer_8_Unsigned)
       is
       begin
-        return
-          Implementation.Clear(
-            Location      => Allocate_Dirty(Number_Of_Bits, Memory_Identifier),
-            Initial_Value => CLEARED_MEMORY_VALUE,
-            Size          => Number_Of_Bits);
-      end Allocate;
-  --------------------
-  -- Allocate_Dirty --
-  --------------------
-    function Allocate_Dirty(
-      Number_Of_Bits    : in Integer_4_Unsigned;
-      Memory_Identifier : in Integer_Memory_Identifier := UNASSIGNED_IDENTIFIER)
-      return Address
+        Implementation.Set_Byte_Limits(Minimum, Maximum);
+      exception
+        when System_Call_Failure =>
+          null;
+      end Set_Byte_Limits;
+  ---------------
+  -- Get_State --
+  ---------------
+    function Get_State
+      return Record_State
       is
       begin
-        return
-          Implementation.Allocate(
-            Size =>
-              Integer_4_Unsigned(
-                (Number_Of_Bits + (MEMORY_ALIGNMENT - 1))
-                and not (MEMORY_ALIGNMENT - 1)),
-            Alignment => MEMORY_ALIGNMENT);
-      end Allocate_Dirty;
+        return Implementation.Get_State;
+      exception
+        when System_Call_Failure =>
+          return (others => <>);
+      end Get_State;
+    LAUNCH_STATE : constant Record_State := Get_State; -- Bit of a hack
+  -------------------------
+  -- Get_State_At_Launch --
+  -------------------------
+    function Get_State_At_Launch
+      return Record_State
+      is
+      begin
+        return LAUNCH_STATE;
+      end Get_State_At_Launch;
   end Neo.System.Memory;
+

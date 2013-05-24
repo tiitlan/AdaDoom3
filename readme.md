@@ -64,6 +64,32 @@ To compile with GPS click the gear and hammer button `✹` after ensuring the sc
 
 After successfully compiling press play `▶` to run.
 
+Using Git
+---------
+
+Github's tutorial on installing and using commandline git:
+https://help.github.com/categories/54/articles
+
+Frequent commands:
+
+>    `git init`
+
+>    `git config --global user.email ""`
+
+>    `git config --global user.name ""`
+
+>    `git remote add origin https://github.com/AdaDoom3/AdaDoom3.git`
+
+>    `git pull origin master`
+
+>    `git pull origin branch`
+
+>    `git commit -am ''`
+
+>    `git push origin master`
+
+>    `git push origin master:branch`
+
 Organization
 ------------
 The project is organized into the following layers, currently work is being done on the foundation and system layers for Windows.
@@ -87,10 +113,10 @@ Roadmap
 Tasks
 -----
 The following are small tasks that are currently needed
-* Begin adding Linux support by implementing stubbed functions/subprograms in the following files
-  * Linux/neo-system-implementation.adb
-  * Linux/neo-system-memory-implementation.adb
-  * Linux/neo-system-processor-implementation_for_operating_system.adb
+* Begin adding Linux/Mac support by implementing stubbed functions/subprograms in the following files
+  * POSIX/neo-system-implementation.adb
+  * POSIX/neo-system-memory-implementation.adb
+  * POSIX/neo-system-processor-implementation_for_operating_system.adb
 
 Author
 ------

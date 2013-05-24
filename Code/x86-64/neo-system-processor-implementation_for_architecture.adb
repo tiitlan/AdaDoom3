@@ -84,7 +84,7 @@ package body Implementation_For_Architecture
     DO_CRASH_ON_INEXACT_RESULT       : constant Boolean            := False;
     DO_CRASH_ON_DIVIDE_BY_ZERO       : constant Boolean            := False;
     DO_CRASH_ON_NUMERIC_OVERFLOW     : constant Boolean            := False;
-    DO_CRASH_ON_inVALID_OPERATION    : constant Boolean            := False;
+    DO_CRASH_ON_INVALID_OPERATION    : constant Boolean            := False;
     DO_CRASH_ON_NUMERIC_UNDERFLOW    : constant Boolean            := False;
     DO_CRASH_ON_DENORMALIZED_OPERAND : constant Boolean            := False;
     TO_ESI                           : constant String_1           := "s";
@@ -178,6 +178,10 @@ package body Implementation_For_Architecture
     function Get_Value(
       Value : in Record_Value)
       return Integer_8_Unsigned
+      with Pre => Value.End_Bit > Value.Start_Bit;
+    function Get_Value(
+      Value : in Record_Value)
+      return Integer_8_Unsigned
       is
       begin
         return
@@ -233,9 +237,9 @@ package body Implementation_For_Architecture
       is
       Data : aliased Integer_4_Unsigned := 0;
       begin
-        if Memory_Size < 2 ** 32 then
+        if Address'Size < 32 then
           raise CPUID_Is_Not_Supported;
-        elsif Memory_Size = 2 ** 32 then
+        elsif Address'Size = 32 then
           Asm( -- Check for cpuid
             Volatile => True,
             Template =>
@@ -325,7 +329,7 @@ package body Implementation_For_Architecture
             if not DO_CRASH_ON_DENORMALIZED_OPERAND then
               Exception_Mask := Exception_Mask OR 16#0000_0100#;
             end if;
-            if not DO_CRASH_ON_inVALID_OPERATION then
+            if not DO_CRASH_ON_INVALID_OPERATION then
               Exception_Mask := Exception_Mask OR 16#0000_0080#;
             end if;
             if Is_Enabled(INTEL_FXSR) then
@@ -402,7 +406,7 @@ package body Implementation_For_Architecture
         Specifics.Has_Leading_Zero_Count                     := Is_Enabled(AMD_ABM);
         if
         Specifics.Has_Streaming_SIMD_Extensions_4_2 and then
-        Is_Newer_Than(Linux_2_7_System, Macintosh_10_6_System, Windows_2_6_1_System)
+        Is_Newer_Than(Linux_3_System, Macintosh_10_6_System, Windows_2_6_1_System)
         then
           Asm( -- Check if the operating system will save the YMM registers
             Volatile => True,
@@ -532,7 +536,7 @@ package body Implementation_For_Architecture
           Inputs   =>(
             Address           'Asm_Input(TO_EAX, Other_Data'Address),
             Integer_4_Unsigned'Asm_Input(TO_ECX, Rounding_Mask)),
-          Template => 
+          Template =>
             ----------------------------------------
             " fnstcw (%%eax)          " & END_LINE &
             " movw   (%%eax), %%bx    " & END_LINE &
@@ -564,7 +568,7 @@ package body Implementation_For_Architecture
           Inputs   =>(
             Address           'Asm_Input(TO_EAX, Blank_Memory'Address),
             Integer_4_Unsigned'Asm_Input(TO_ECX, Precision_Mask)),
-          Template => 
+          Template =>
             ----------------------------------------
             " fnstcw (%%eax)          " & END_LINE &
             " movw   (%%eax), %%bx    " & END_LINE &
@@ -607,7 +611,7 @@ package body Implementation_For_Architecture
         Asm(
           Volatile => True,
           Inputs   => Address'Asm_Input(TO_EAX, Data'Address),
-          Template => 
+          Template =>
             -------------------------------------------
             " fnstenv (%%eax)            " & END_LINE &
             " movl    8(%%eax),    %%eax " & END_LINE &
@@ -627,7 +631,7 @@ package body Implementation_For_Architecture
         Asm(
           Volatile => True,
           Inputs   => Address'Asm_Input(TO_EAX, Data'Address),
-          Template => 
+          Template =>
             ---------------------------------------------
             "   fnstenv (%%eax)            " & END_LINE &
             "   movl    8(%%eax),    %%eax " & END_LINE &
@@ -645,6 +649,19 @@ package body Implementation_For_Architecture
             " 1:                           " & END_LINE );
             ---------------------------------------------
       end Clear_Stack;
+  --------------------------
+  -- Compare_And_Exchange --
+  --------------------------
+    function Compare_And_Exchange(
+      Destination : out Integer_4_Unsigned;
+      Comparand   : in  Integer_4_Unsigned;
+      Item        : in  Integer_4_Unsigned)
+      return Integer_4_Unsigned
+      is
+      begin
+        raise System_Call_Failure;
+        return 0;
+      end Compare_And_Exchange;
   ---------------
   -- Put_Trace --
   ---------------
@@ -720,7 +737,10 @@ package body Implementation_For_Architecture
       Data_From_Extensions : aliased Integer_4_Unsigned          := 0;
       Stack                : aliased array(1..8) of Float_8_Real := (others => 0.0);
       Environment          : aliased Record_x86_Environment      := (others => <>);
+-- The assembly block in this procedure raises an EXCEPTION_ACCESS_VIOLATION PROGRAM_ERROR, so it is disabled
+Disable_Put_Stack : Exception;
       begin
+<<<<<<< HEAD
 -- SOMETHING IN THIS ASM BLOCK CAUSES AN ERROR:
 --    Execution terminated by unhandled exception
 --    Exception name: PROGRAM_ERROR
@@ -812,6 +832,97 @@ package body Implementation_For_Architecture
 --            Outputs =>
 --        Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
 GOTO ENDING;
+=======
+Put_Line("Put_Stack disabled due to assembly block bug.");
+raise Disable_Put_Stack;
+        Asm(
+          Volatile => True,
+          Inputs =>(
+            Address'Asm_Input(TO_EAX, Environment'Address),
+            Address'Asm_Input(TO_EDI, Stack'Address)),
+          Template =>
+            ---------------------------------------------
+            "   movl    %%eax,       %%esi " & END_LINE &
+            "   fnstenv (%%esi)            " & END_LINE &
+            "   movl    8(%%esi),    %%esi " & END_LINE &
+            "   xor     $0xffffffff, %%esi " & END_LINE &
+            "   movl    $0x0000c000, %%edx " & END_LINE &
+            "   xor     %%eax,       %%eax " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fst     (%%edi)            " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(1)            " & END_LINE &
+            "   fst     8(%%edi)           " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(1)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(2)            " & END_LINE &
+            "   fst     16(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(2)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(3)            " & END_LINE &
+            "   fst     24(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(3)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(4)            " & END_LINE &
+            "   fst     32(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(4)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(5)            " & END_LINE &
+            "   fst     40(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(5)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(6)            " & END_LINE &
+            "   fst     48(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(6)            " & END_LINE &
+            "   shr     $2,          %%edx " & END_LINE &
+            "   movl    %%esi,       %%ecx " & END_LINE &
+            "   and     %%edx,       %%ecx " & END_LINE &
+            "   jz      1f                 " & END_LINE &
+            ---------------------------------------------
+            "   fxch    %%st(7)            " & END_LINE &
+            "   fst     56(%%edi)          " & END_LINE &
+            "   inc     %%eax              " & END_LINE &
+            "   fxch    %%st(7)            " & END_LINE &
+            ---------------------------------------------
+            " 1:                           " & END_LINE ,
+            ---------------------------------------------
+          Outputs =>
+            Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
+>>>>>>> upstream/master
         if Number_Of_Values <= Stack'Size then
           for I in 1..Integer(Number_Of_Values) loop
             Put_Line("Stack" & Integer'Wide_Image(I) & ": " & Float_8_Real'Wide_Image(Stack(I)));
@@ -832,7 +943,6 @@ GOTO ENDING;
         Put_Line("Data selector: "   & To_Image(Environment.Data_Selector,   2));
         Put_Line("Operation code: "  & To_Image(Environment.Operation_Code,  2));
         Put_Line("Program counter: " & To_Image(Environment.Program_Counter, 2));
-<<ENDING>>
-Put_Line( "Put_Stack has been disabled due to ASM bug." );
+exception when Disable_Put_Stack => null;
       end Put_Stack;
   end Implementation_For_Architecture;

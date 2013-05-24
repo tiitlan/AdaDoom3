@@ -61,6 +61,7 @@ package body Neo.System.Processor
       Specifics : constant Record_Specifics := Get_Specifics;
       begin
         Put_Title("PROCESSOR TEST");
+        D;
         Set_Precision(Double_Extended_Precision);
         Set_Rounding(Nearest_Rounding);
         Check_Exceptions;
@@ -212,7 +213,6 @@ package body Neo.System.Processor
           end if;
         end if;
         Put_Stack;
-        D;
         Hang_Window;
       exception
         when Unsupported_Feature =>
@@ -234,6 +234,15 @@ package body Neo.System.Processor
   -----------------
     procedure Clear_Stack
       renames Implementation_For_Architecture.Clear_Stack;
+  --------------------------
+  -- Compare_And_Exchange --
+  --------------------------
+    function Compare_And_Exchange(
+      Destination : out Integer_4_Unsigned;
+      Comparand   : in  Integer_4_Unsigned;
+      Item        : in  Integer_4_Unsigned)
+      return Integer_4_Unsigned
+      renames Implementation_For_Architecture.Compare_And_Exchange;
   --------------------
   -- Is_Stack_Empty --
   --------------------

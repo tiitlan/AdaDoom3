@@ -89,8 +89,8 @@ package Neo.Windows
     EVENT_INPUT_FOCUS_LOST                     : constant Integer_4_Unsigned_C := 16#0000_0008#;
     EVENT_DEVICE_CHANGE                        : constant Integer_4_Unsigned_C := 16#0000_00FE#;
     STYLE_EXTRA_ALWAYS_ON_TOP                  : constant Integer_4_Unsigned_C := 16#0000_0008#;
-    STYLE_EXTRA_NOTHING                        : constant Integer_4_Unsigned_C := 16#0000_0000#; 
-    STYLE_NOTHING                              : constant Integer_4_Unsigned_C := 16#0000_0000#; 
+    STYLE_EXTRA_NOTHING                        : constant Integer_4_Unsigned_C := 16#0000_0000#;
+    STYLE_NOTHING                              : constant Integer_4_Unsigned_C := 16#0000_0000#;
     STYLE_TITLEBAR                             : constant Integer_4_Unsigned_C := 16#00C0_0000#;
     STYLE_TITLEBAR_MENU                        : constant Integer_4_Unsigned_C := 16#0008_0000#;
     STYLE_TITLEBARLESS_AND_BORDERLESS          : constant Integer_4_Unsigned_C := 16#8000_0000#;
@@ -347,14 +347,54 @@ package Neo.Windows
     --     Product : Integer_2_Unsigned_C := 0;
     --     Version : Integer_2_Unsigned_C := 0;
     --   end record;
-    type Record_Device_Header
-      is record
-        Kind        : Integer_4_Unsigned_C := 0;
-        Size        : Integer_4_Unsigned_C := 0;
-        Device      : Address              := NULL_ADDRESS;
-        Data_Signed : Integer_4_Signed_C   := 0;
-      end record;
-      pragma Convention(C, Record_Device_Header);
+-- typedef struct _XINPUT_GAMEPAD
+-- {
+--     WORD                                wButtons;
+--     BYTE                                bLeftTrigger;
+--     BYTE                                bRightTrigger;
+--     SHORT                               sThumbLX;
+--     SHORT                               sThumbLY;
+--     SHORT                               sThumbRX;
+--     SHORT                               sThumbRY;
+-- } XINPUT_GAMEPAD, *PXINPUT_GAMEPAD;
+
+-- typedef struct _XINPUT_STATE
+-- {
+--     DWORD                               dwPacketNumber;
+--     XINPUT_GAMEPAD                      Gamepad;
+-- } XINPUT_STATE, *PXINPUT_STATE;
+
+-- typedef struct _XINPUT_VIBRATION
+-- {
+--     WORD                                wLeftMotorSpeed;
+--     WORD                                wRightMotorSpeed;
+-- } XINPUT_VIBRATION, *PXINPUT_VIBRATION;
+
+-- typedef struct _XINPUT_CAPABILITIES
+-- {
+--     BYTE                                type;
+--     BYTE                                SubType;
+--     WORD                                Flags;
+--     XINPUT_GAMEPAD                      Gamepad;
+--     XINPUT_VIBRATION                    Vibration;
+-- } XINPUT_CAPABILITIES, *PXINPUT_CAPABILITIES;
+
+-- #ifndef XINPUT_USE_9_1_0
+
+-- typedef struct _XINPUT_BATTERY_INFORMATION
+-- {
+--     BYTE BatteryType;
+--     BYTE BatteryLevel;
+-- } XINPUT_BATTERY_INFORMATION, *PXINPUT_BATTERY_INFORMATION;
+
+-- typedef struct _XINPUT_KEYSTROKE
+-- {
+--     WORD    VirtualKey;
+--     WCHAR   Unicode;
+--     WORD    Flags;
+--     BYTE    UserIndex;
+--     BYTE    HidCode;
+-- } XINPUT_KEYSTROKE, *PXINPUT_KEYSTROKE;
     -- type Record_Device_Capabilities
     --   is record
     --     Usage                                 : Integer_2_Unsigned_C  := 0;
@@ -428,6 +468,23 @@ package Neo.Windows
     --     Designator_Maximum  : Integer_2_Unsigned_C := 0;
     --   end record;
     --   pragma Convention(C, Record_Device_Capability_Values);
+    -- type Record_Mouse
+    --   is record
+    --     Point       : Record_Point;
+    --     Data        : Integer_4_Unsigned_C;
+    --     Flags       : Integer_4_Unsigned_C;
+    --     Time        : Integer_4_Unsigned_C;
+    --     Information : Address; -- Changes on 64/32 bit systems
+    --   end record;
+    --   pragma Convention(C, Record_Mouse);
+    type Record_Device_Header
+      is record
+        Kind        : Integer_4_Unsigned_C := 0;
+        Size        : Integer_4_Unsigned_C := 0;
+        Device      : Address              := NULL_ADDRESS;
+        Data_Signed : Integer_4_Signed_C   := 0;
+      end record;
+      pragma Convention(C, Record_Device_Header);
     type Record_Mouse
       is record
         Flags             : Integer_2_Unsigned_C := 0;
@@ -438,15 +495,6 @@ package Neo.Windows
         Extra_Information : Integer_4_Unsigned_C := 0;
       end record;
       pragma Convention(C, Record_Mouse);
-    -- type Record_Mouse
-    --   is record
-    --     Point       : Record_Point;
-    --     Data        : Integer_4_Unsigned_C;
-    --     Flags       : Integer_4_Unsigned_C;
-    --     Time        : Integer_4_Unsigned_C;
-    --     Information : Address; -- Changes on 64/32 bit systems
-    --   end record;
-    --   pragma Convention(C, Record_Mouse);
     type Record_Keyboard
       is record
         Make_Code         : Integer_2_Unsigned_C := 0;
@@ -508,7 +556,7 @@ package Neo.Windows
         Right  : Integer_4_Signed_C := 0;
         Bottom : Integer_4_Signed_C := 0;
       end record;
-      pragma Convention(C, Record_Rectangle); 
+      pragma Convention(C, Record_Rectangle);
     type Record_Monitor_Information
       is record
         Size      : Integer_4_Unsigned_C := Record_Monitor_Information'Size / 8;
@@ -532,7 +580,7 @@ package Neo.Windows
         Class_Name : Access_Constant_Character_2_C := NULL;
         Icon_Small : Address                       := NULL_ADDRESS;
       end record;
-      pragma Convention(C, Record_Window_Class); 
+      pragma Convention(C, Record_Window_Class);
     type Record_Point
       is record
         X : Integer_4_Signed_C := 0;
@@ -598,54 +646,6 @@ package Neo.Windows
         Header : Record_Device_Header := (others => <>);
         Data   : Record_Mouse         := (others => <>);
       end record;
--- typedef struct _XINPUT_GAMEPAD
--- {
---     WORD                                wButtons;
---     BYTE                                bLeftTrigger;
---     BYTE                                bRightTrigger;
---     SHORT                               sThumbLX;
---     SHORT                               sThumbLY;
---     SHORT                               sThumbRX;
---     SHORT                               sThumbRY;
--- } XINPUT_GAMEPAD, *PXINPUT_GAMEPAD;
-
--- typedef struct _XINPUT_STATE
--- {
---     DWORD                               dwPacketNumber;
---     XINPUT_GAMEPAD                      Gamepad;
--- } XINPUT_STATE, *PXINPUT_STATE;
-
--- typedef struct _XINPUT_VIBRATION
--- {
---     WORD                                wLeftMotorSpeed;
---     WORD                                wRightMotorSpeed;
--- } XINPUT_VIBRATION, *PXINPUT_VIBRATION;
-
--- typedef struct _XINPUT_CAPABILITIES
--- {
---     BYTE                                type;
---     BYTE                                SubType;
---     WORD                                Flags;
---     XINPUT_GAMEPAD                      Gamepad;
---     XINPUT_VIBRATION                    Vibration;
--- } XINPUT_CAPABILITIES, *PXINPUT_CAPABILITIES;
-
--- #ifndef XINPUT_USE_9_1_0
-
--- typedef struct _XINPUT_BATTERY_INFORMATION
--- {
---     BYTE BatteryType;
---     BYTE BatteryLevel;
--- } XINPUT_BATTERY_INFORMATION, *PXINPUT_BATTERY_INFORMATION;
-
--- typedef struct _XINPUT_KEYSTROKE
--- {
---     WORD    VirtualKey;
---     WCHAR   Unicode;
---     WORD    Flags;
---     BYTE    UserIndex;
---     BYTE    HidCode;
--- } XINPUT_KEYSTROKE, *PXINPUT_KEYSTROKE;
   ------------
   -- Arrays --
   ------------
@@ -662,6 +662,8 @@ package Neo.Windows
     --   is access all Record_Device_List;
     -- type Access_Array_Record_Device_List
     --   is access all Array_Record_Device_List;
+    type Access_Record_Memory_Status
+      is access all Record_Memory_Status;
     type Access_Record_Key
       is access all Record_Key;
     type Access_Record_Mouse
@@ -677,11 +679,11 @@ package Neo.Windows
       is NEW Ada.Unchecked_Conversion(Access_Record_Mouse, Integer_4_Signed_C);
     function To_Integer_4_Signed_C
       is NEW Ada.Unchecked_Conversion(Access_Record_Key, Integer_4_Signed_C);
-    function To_Access_Record_Rectangle   
+    function To_Access_Record_Rectangle
       is NEW Ada.Unchecked_Conversion(Address, Access_Record_Rectangle);
-    function To_Access_Record_Key 
+    function To_Access_Record_Key
       is NEW Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Key);
-    function To_Access_Record_Rectangle   
+    function To_Access_Record_Rectangle
       is NEW Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Rectangle);
     function Get_Blank_Cursor
       return Array_Integer_1_Unsigned;
@@ -730,11 +732,11 @@ package Neo.Windows
     --   Attributes : in Access_Device_Attributes)
     --   return Integer_4_Signed_C;
     -- function Get_Device_Interface_Detail(
-    --   Information_Set       : in Record_Device_Information;--_In_       HDEVINFO 
-    --   Interface             : in Record_Device_Interface;--_In_       PSP_DEVICE_INTERFACE_DATA 
-    --   Interface_Detail      : in Record_Device_Detail;--_Out_opt_  PSP_DEVICE_INTERFACE_DETAIL_DATA 
-    --   Interface_Detail_Size : in Integer_4_Unsigned_C;--, _In_       DWORD 
-    --   Required_Size         : in Access_Integer_4_Unsigned_C;--_Out_opt_  PDWORD 
+    --   Information_Set       : in Record_Device_Information;--_In_       HDEVINFO
+    --   Interface             : in Record_Device_Interface;--_In_       PSP_DEVICE_INTERFACE_DATA
+    --   Interface_Detail      : in Record_Device_Detail;--_Out_opt_  PSP_DEVICE_INTERFACE_DETAIL_DATA
+    --   Interface_Detail_Size : in Integer_4_Unsigned_C;--, _In_       DWORD
+    --   Required_Size         : in Access_Integer_4_Unsigned_C;--_Out_opt_  PDWORD
     --   Information           : in );--_Out_opt_  PSP_DEVINFO_DATA);
     --   return Integer_4_Signed;
     -- function Enumerate_Device_Interfaces(
@@ -756,12 +758,10 @@ package Neo.Windows
     --   Window_Parent : in Address;
     --   Flags         : in Integer_4_Unsigned_C)
     --   return Address;
-    function Is_Lower(
-      Item : in Character_2)
-      return Integer_4_Signed;
-    function Is_Upper(
-      Item : in Character_2)
-      return Integer_4_Signed;
+    function Is_Running_In_Emulated_32_Bit(
+      Process : in Address;
+      Result  : in Access_Integer_4_Signed_C)
+      return Integer_4_Signed_C;
     function Register_Devices(
       Devices : in Address;
       Number  : in Integer_4_Unsigned_C;
@@ -940,15 +940,15 @@ package Neo.Windows
       Module : in Address)
       return Integer_4_Signed_C;
     function Load_Library(
-      Name : in Access_Constant_Character_2_C) 
-      return Address; 
+      Name : in Access_Constant_Character_2_C)
+      return Address;
     function Get_Foreground_Window
       return Address;
     function Get_Disk_Free_Space(
       Directory                  : in Access_Constant_Character_2_C;
-      Free_Bytes_Available       : in Address;
-      Total_Number_Of_Bytes      : in Address;
-      Total_Number_Of_Free_Bytes : in Address)
+      Free_Bytes_Available       : in Access_Integer_8_Unsigned_C;
+      Total_Number_Of_Bytes      : in Access_Integer_8_Unsigned_C;
+      Total_Number_Of_Free_Bytes : in Access_Integer_8_Unsigned_C)
       return Integer_4_Signed_C;
     function Shell_Execute(
       Window       : in Address;
@@ -972,8 +972,8 @@ package Neo.Windows
       Size : in Integer_Size_C)
       return Integer_4_Signed_C;
     function Global_Allocate(
-      Flags : Integer_4_Unsigned_C;
-      Bytes : Integer_Size_C)
+      Flags : in Integer_4_Unsigned_C;
+      Bytes : in Integer_Size_C)
       return Address;
     function Get_Clipboard_Data(
       Format : in Integer_4_Unsigned_C)
@@ -1008,7 +1008,7 @@ package Neo.Windows
       Arguments  : in Address)
       return Integer_4_Unsigned_C;
     function Global_Memory_Status(
-      Buffer : Address)
+      Buffer : in Access_Record_Memory_Status)
       return Integer_4_Signed_C;
     function Get_System_Default_Language
       return Integer_2_Unsigned_C;
@@ -1040,7 +1040,7 @@ package Neo.Windows
       Data_Signed   : in Integer_4_Signed_C)
       return Integer_4_Signed_C;
     function Get_Desktop_Window
-      return Address; 
+      return Address;
     function Get_Current_Process
       return Address;
     function Get_Current_Instance
@@ -1051,10 +1051,10 @@ package Neo.Windows
       System_Affinity_Mask  : in Address)
       return Integer_4_Signed_C;
     function Query_Performance_Counter(
-      Performance_Count : in Address) 
+      Performance_Count : in Address)
       return Integer_4_Signed_C;
     function Query_Performance_Frequency(
-      Frequency : in Address) 
+      Frequency : in Address)
       return Integer_4_Signed_C;
     function Get_Last_Error
       return Integer_4_Unsigned_C;
@@ -1224,8 +1224,7 @@ private
     pragma Linker_Options("-lhid");
     pragma Linker_Options("-lsetupapi");
     pragma Import(C,       Get_Current_Instance,           "rts_get_hInstance");
-    pragma Import(Stdcall, Is_Lower,                       "iswlower");
-    pragma Import(Stdcall, Is_Upper,                       "iswupper");
+    pragma Import(Stdcall, Is_Running_In_Emulated_32_Bit,  "IsWow64Process");
     --pragma Import(Stdcall, Write_File,                     "WriteFile");
     --pragma Import(Stdcall, Convert_String_2_C_To_UTF_8,    "WideCharToMultiByte");
     --pragma Import(Stdcall, Enumerate_Device_Interfaces,    "SetupDiEnumDeviceInterfaces");
@@ -1300,8 +1299,8 @@ private
     pragma Import(Stdcall, Message_Box,                    "MessageBoxW");
     pragma Import(Stdcall, Get_Current_Process,            "GetCurrentProcess");
     pragma Import(Stdcall, Monitor_From_Window,            "MonitorFromWindow");
-    pragma Import(Stdcall, Post_Quit_Message,              "PostQuitMessage"); 
-    pragma Import(Stdcall, Get_Desktop_Window,             "GetDesktopWindow"); 
+    pragma Import(Stdcall, Post_Quit_Message,              "PostQuitMessage");
+    pragma Import(Stdcall, Get_Desktop_Window,             "GetDesktopWindow");
     pragma Import(Stdcall, Get_Process_Affinity_Mask,      "GetProcessAffinityMask");
     pragma Import(Stdcall, Query_Performance_Counter,      "QueryPerformanceCounter");
     pragma Import(Stdcall, Query_Performance_Frequency,    "QueryPerformanceFrequency");

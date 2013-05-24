@@ -16,6 +16,24 @@
 --
 package body Neo.Foundation.Data_Types
   is
+  ----------------------
+  -- Protected_Status --
+  ----------------------
+    protected body Protected_Status
+      is
+        function Is_Doing_Something
+          return Boolean
+          is
+          begin
+            return Status;
+          end Is_Doing_Something;
+        procedure Set_Is_Doing_Something(
+          New_Status : in Boolean)
+          is
+          begin
+            Status := New_Status;
+          end Set_Is_Doing_Something;
+      end Protected_Status;
   -----------------------------
   -- Is_Low_Order_Byte_First --
   -----------------------------
@@ -198,5 +216,5 @@ package body Neo.Foundation.Data_Types
     --   Minimum_Bits : Integer_4_Unsigned := Shift_Left(Shift_Left(1, Exponent_Bits)     - 2, Mantissa_Bits) or 1;
     --   begin
   end Neo.Foundation.Data_Types;
-  
-  
+
+

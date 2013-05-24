@@ -1,13 +1,10 @@
-##########
-## GNAT ##
-##########
+#########
+## GPS ##
+#########
 
-*.bexch
-*.cswi
-*.cgpr
-*.ad?
-*.ali
-*.o
+# Documentation generation
+.html
+# More here?
 
 
 #############
@@ -30,5 +27,9 @@ Desktop.ini
 #Mr Developer
 .mr.developer.cfg
 
-# Mac crap
+
+###############
+## Macintosh ##
+###############
+
 .DS_Store

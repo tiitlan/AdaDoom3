@@ -1,4 +1,5 @@
-# Only here for the build system until this can be settled https://github.com/AdaDoom3/AdaDoom3/issues/15
+# A shell script needs to replace this makefile, and based off of the bit size of the client's
+# computer pass the appropriate flags to gpr
 
 SYSTEM     = Linux
 COMPILER   = GNAT
@@ -16,7 +17,7 @@ GMAKE_OPTS =               \
 all: build
 
 build:
-	gnatmake $(GMAKE_OPTS) -Padadoom3
+  gnatmake $(GMAKE_OPTS) -Padadoom3
 
 clean:
 	@rm -rf $(OBJ_DIR)/*

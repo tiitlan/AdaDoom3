@@ -1,5 +1,5 @@
---                                                                                                                      
---                                                                                                                      
+--
+--
 --
 --
 --
@@ -105,74 +105,6 @@ package body Implementation
         return Windows_System;
       end Get_Version;
   ------------------
-  -- Get_Language --
-  ------------------
-    function Get_Language
-      return Enumerated_Language
-      is
-      begin
-        case Get_System_Default_Language is
-          when LANGUAGE_ARABIC =>
-            return Arabic_Language;
-          when LANGUAGE_BASQUE =>
-            return Basque_Language;
-          when LANGUAGE_CATALAN =>
-            return Catalan_Language;
-          when LANGUAGE_CHINESE_SIMPLIFIED =>
-            return Simplified_Chinese_Language;
-          when LANGUAGE_CHINESE_TRADITIONAL =>
-            return Traditional_Chinese_Language;
-          when LANGUAGE_CZECH =>
-            return Czech_Language;
-          when LANGUAGE_DANISH =>
-            return Danish_Language;
-          when LANGUAGE_DUTCH =>
-            return Dutch_Language;
-          when LANGUAGE_ENGLISH =>
-            return English_Language;
-          when LANGUAGE_FINNISH =>
-            return Finnish_Langauge;
-          when LANGUAGE_FRENCH =>
-            return French_Langauge;
-          when LANGUAGE_GERMAN =>
-            return German_Language;
-          when LANGUAGE_GREEK =>
-            return Greek_Language;
-          when LANGUAGE_HEBREW =>
-            return Hebrew_Language;
-          when LANGUAGE_HUNGARIAN =>
-            return Hungarian_Language;
-          when LANGUAGE_ITALIAN =>
-            return Italian_Language;
-          when LANGUAGE_JAPANESE =>
-            return Japanese_Language;
-          when LANGUAGE_KOREAN =>
-            return Korean_Language;
-          when LANGUAGE_NORWEGIAN =>
-            return Norwegian_Language;
-          when LANGUAGE_POLISH =>
-            return Polish_Language;
-          when LANGUAGE_PORTUGUESE =>
-            return Portuguese_Language;
-          when LANGUAGE_PORTUGUESE_BRAZIL =>
-            return Brazilian_Portuguese_Language;
-          when LANGUAGE_RUSSIAN =>
-            return Russian_Language;
-          when LANGUAGE_SLOVAKIAN =>
-            return Slovakian_Language;
-          when LANGUAGE_SLOVENIAN =>
-            return Slovenian_Language;
-          when LANGUAGE_SPANISH =>
-            return Spanish_Language;
-          when LANGUAGE_SWEDISH =>
-            return Swedish_Language;
-          when LANGUAGE_TURKISH =>
-            return Turkish_Language;
-          when others =>
-            return English_Language;
-        end case;
-      end Get_Language;
-  ------------------
   -- Get_Username --
   ------------------
     function Get_Username
@@ -257,14 +189,24 @@ package body Implementation
         --     cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
         --   }
       end Execute_Application;
-  -----------------------------------------------
-  -- Is_Running_In_Emulated_32_Bit_Environment --
-  -----------------------------------------------
-    function Is_Running_In_Emulated_32_Bit_Environment
-      return Boolean
+  ------------------
+  -- Get_Bit_Size --
+  ------------------
+    function Get_Bit_Size
+      return Integer_4_Positive
       is
+      Result : aliased Integer_4_Signed_C := 0;
       begin
-        return False;
-      end Is_Running_In_Emulated_32_Bit_Environment;
+        if Address'Size = 64 then
+          return 64;
+        elsif Is_Running_In_Emulated_32_Bit(Get_Current_Process, Result'unchecked_access) = FAILED then
+          raise System_Call_Failure;
+        end if;
+        return(
+          if Result = C_TRUE then
+            64
+          else
+            32);
+      end Get_Bit_Size;
   end Implementation;
 

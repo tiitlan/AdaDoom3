@@ -36,7 +36,6 @@ package Neo.System.Input
   -- Exceptions --
   ----------------
     No_Input_Devices_Detected             : Exception;
-    Generic_Input_Index_Out_Of_Range      : Exception;
     Input_Enabled_Without_Being_Disabled  : Exception;
     Input_Disabled_Without_Being_Enabled  : Exception;
     Device_With_Identifier_Does_Not_Exist : Exception;
@@ -119,48 +118,14 @@ package Neo.System.Input
     type Enumerated_Trigger
       is(
       Left_Trigger, Right_Trigger);
-  -----------
-  -- Types --
-  -----------
-    type Record_Input
-      is private;
-    type Record_Key;
-    type Record_Device;
-    type Record_Input_Coordinate;
-    type Record_Generic_Device_Input;
-  ------------
-  -- Arrays --
-  ------------
-    type Array_Record_Key
-      is array (Integer_4_Positive range <>)
-      of Boolean;
-    type Array_Record_Device
-      is array (Integer_4_Positive range <>)
-      of Record_Device;
-    type Array_Record_Input_Coordinate
-      is array (Integer_4_Positive range <>)
-      of Record_Input_Coordinate;
-  ---------------
-  -- Accessors --
-  ---------------
-    type Access_Array_Record_Key
-      is access all Array_Record_Key;
-    type Access_Array_Record_Input_Coordinate
-      is access all Array_Record_Input_Coordinate
-    type Access_Record_Generic_Device_Input
-      is access all Record_Generic_Device_Input;
   -------------
   -- Records --
   -------------
-    type Record_Key
-      is record
-        Is_Pressed          : Boolean := False;
-        Time_Of_Last_Change : Time    := (others => <>);
-      end record;
     type Record_Device
       is record
-        Identifier                 : Address            := 0;
+        Identifier                 : Integer_8_Unsigned := 0;
         Player                     : Integer_4_Positive := 1;
+        Player_Index               : Integer_4_Positive := 1;
         Description                : String_2(1..128)   := null;
         Number_Of_Generic_Buttons  : Integer_4_Natural  := 0;
         Number_Of_Generic_Triggers : Integer_4_Natural  := 0;
@@ -171,24 +136,6 @@ package Neo.System.Input
         X : Integer_8_Signed := 0;
         Y : Integer_8_Signed := 0;
       end record;
-    type Record_Generic_Device_Input
-      is record
-        Identifier       : Address                              := 0;  
-        Generic_Buttons  : Access_Array_Record_Key              := null;
-        Generic_Triggers : Access_Array_Float_4_Percent         := null;
-        Generic_Sticks   : Access_Array_Record_Input_Coordinate := null;
-        Next             : Access_Record_Generic_Device_Input   := null;
-      end record;
-    type Record_Player
-      is record
-        Devices            : Access_Record_Generic_Device_Input                       := null;
-        Last_Character_Key : Record_Key                                               := (others => <>);
-        Mouse              : Record_Input_Coordinate                                  := (others => <>);
-        Triggers           : Array_Float_4_Percent         (Enumerated_Trigger'Range) := (others => <>);
-        Sticks             : Array_Record_Input_Coordinate (Enumerated_Stick'Range)   := (others => <>);
-        Buttons            : Array_Record_Key              (Enumerated_Button'Range)  := (others => (others => <>));
-        Keys               : Array_Record_Key              (Enumerated_Key'Range)     := (others => (others => <>));
-      end record;
   -----------------
   -- Subprograms --
   -----------------
@@ -197,65 +144,56 @@ package Neo.System.Input
     procedure Finalize;
     procedure Disable;
     procedure Enable;
-    function Is_Player_Pressing(
-      Player : in Integer_4_Positive;
-      Key    : in Enumerated_Key)
-      return Boolean;
-    function Is_Player_Pressing(
-      Device : in Integer_8_Unsigned;
-      Player : in Record_Player;
-      Key    : in Enumerated_Key)
-      return Boolean;
-    function Get_Number_Of_Devices
-      return Integer_4_Natural;
+    procedure Set_Vibration(
+      Player         : in Integer_4_Positive;
+      Frequency_High : in Float_4_Percent;
+      Frequency_Low  : in Float_4_Percent);
+    procedure Set_Device_Owner(
+      Identifier : in Integer_8_Unsigned;
+      Player     : in Integer_4_Positive);
     function Get_Devices
       return Array_Record_Device;
     function Get_Device(
       Identifier : in Integer_8_Unsigned)
       return Record_Device;
-    function Get_Player(
+    function Get_Last_Character_Pressed(
       Player : in Integer_4_Positive)
-      return Record_Player;
-    function Get_Player_Trigger(
+      return Character_2;
+    function Get_Trigger(
       Player  : in Integer_4_Positive;
       Trigger : in Enumerated_Trigger)
       return Float_4_Percent;
-    function Get_Player_Trigger(
-      Device  : in Integer_8_Unsigned;
+    function Get_Trigger(
       Player  : in Integer_4_Positive;
-      Trigger : in Integer_4_Positive)
+      Trigger : in Integer_4_Positive;
+      Device  : in Integer_8_Unsigned)
       return Float_4_Percent;
-    function Get_Player_Stick(
+    function Get_Stick(
       Player : in Integer_4_Positive;
       Stick  : in Enumerated_Stick)
       return Record_Input_Coordinate;
-    function Get_Player_Stick(
-      Device : in Integer_8_Unsigned;
+    function Get_Stick(
       Player : in Integer_4_Positive;
-      Stick  : in Integer_4_Positive)
+      Stick  : in Integer_4_Positive;
+      Device : in Integer_8_Unsigned)
       return Record_Input_Coordinate;
-    function Get_Player_Mouse(
+    function Get_Mouse(
       Player : in Integer_4_Positive)
       return Record_Input_Coordinate;
-    function Get_Character_From_Player_Keys
-      return Character_2;
-    procedure Set_Device_Player(
-      Identifier : in Integer_8_Unsigned;
-      Player     : in Integer_4_Positive);
-    procedure Set_Vibration(
-      Player                 : in Integer_4_Positive;
-      Percent_Frequency_High : in Float_4_Percent;
-      Percent_Frequency_Low  : in Float_4_Percent;
-      Seconds                : in Duration);
-    generic
-      with
-        procedure Vibration_Equation(
-          Seconds_Left           : in     Float_4_Real;
-          Percent_Frequency_High :    out Float_4_Percent;
-          Percent_Frequency_Low  :    out Float_4_Percent);
-    procedure Set_Vibration(
-      Player  : in Integer_4_Positive;
-      Seconds : in Duration);
+    procedure Center_Mouse;
+    function Is_Pressed(
+      Player : in Integer_4_Positive;
+      Key    : in Enumerated_Key)
+      return Boolean;
+    function Is_Pressed(
+      Player : in Integer_4_Positive;
+      Button : in Enumerated_Button)
+      return Boolean;
+    function Is_Pressed(
+      Player : in Integer_4_Positive;
+      Button : in Integer_4_Positive;
+      Device : in Integer_4_Natural)
+      return Boolean;
 -------
 private
 -------
@@ -264,21 +202,6 @@ private
   ---------------
     DURATION_TO_WAIT_BEFORE_KEY_REPEAT : constant Duration := 0.1;
     DURATION_TO_WAIT_BEFORE_POLLING    : constant Duration := 0.002;
-  ---------------
-  -- Accessors --
-  ---------------
-    type Access_Record_Input_Event
-      is access all Record_Input_Event;
-  -------------
-  -- Records --
-  -------------
-    type Record_Input
-      is record
-        Number_Of_Devices : Integer_4_Natural;
-        Players           : 
-        Device_List_Head  : Access_;
-        Event_Queue_Head  : Access_;
-      end record;
   -----------
   -- Tasks --
   -----------
@@ -289,15 +212,40 @@ private
         entry Enable;
         entry Finalize;
       end Task_Input;
-  --------------
-  -- Packages --
-  --------------
-    package Protected_Record_Input
-      is new Neo.Foundation.Generic_Protected(Record_Input);
+  ---------------
+  -- Protected --
+  ---------------
+    protected type Protected_Input
+      is
+      private
+
+    type Record_Generic_Device_Input
+
+        Identifier       : Integer_Address                      := 0;  
+        Generic_Buttons  : Access_Array_Record_Key              := null;
+        Generic_Triggers : Access_Array_Float_4_Percent         := null;
+        Generic_Sticks   : Access_Array_Record_Input_Coordinate := null;
+        Next             : Access_Record_Generic_Device_Input   := null;
+
+    type Record_Player
+
+        Devices            : Access_Record_Generic_Device_Input                       := null;
+        Last_Character_Key : Record_Key                                               := (others => <>);
+        Mouse              : Record_Input_Coordinate                                  := (others => <>);
+        Triggers           : Array_Float_4_Percent         (Enumerated_Trigger'Range) := (others => <>);
+        Sticks             : Array_Record_Input_Coordinate (Enumerated_Stick'Range)   := (others => <>);
+        Buttons            : Array_Record_Key              (Enumerated_Button'Range)  := (others => (others => <>));
+        Keys               : Array_Record_Key              (Enumerated_Key'Range)     := (others => (others => <>));
+
+        Number_Of_Devices : Integer_4_Natural;
+        Players           : 
+        Device_List_Head  : Access_;
+        Event_Queue_Head  : Access_;
+      end Protected_Input;
   ---------------
   -- Variables --
   ---------------
-    Data : Protected_Record_Input.Data;
+    Player_Input : Protected_Player_Input;
   -----------------
   -- Subprograms --
   -----------------
@@ -329,9 +277,13 @@ private
           Device : in Integer_8_Unsigned;
           Key    : in Enumerated_Key);
       with
-        procedure Handle_Key(
+        procedure Handle_Button(
           Device : in Integer_8_Unsigned;
-          Key    : in Integer_4_Positive);
+          Button : in Enumerated_Button);
+      with
+        procedure Handle_Button(
+          Device : in Integer_8_Unsigned;
+          Button : in Integer_4_Positive);
       with
         procedure Handle_Mouse(
           Device : in Integer_8_Unsigned;
@@ -368,21 +320,20 @@ private
         procedure Set_Vibration(
           Device                 : in Integer_8_Unsigned;
           Percent_Frequency_High : in Float_4_Percent;
-          Percent_Frequency_Low  : in Float_4_Percent;
-          Seconds                : in Duration);
+          Percent_Frequency_Low  : in Float_4_Percent);
         function Lookup_Character(
-          Key                                : in Enumerated_Key;
-          Is_Capital_Lock_Enabled            : in Boolean;
-          Is_Number_Lock_Enabled             : in Boolean;
-          Is_Left_Shift_Key_Pressed          : in Boolean;
-          Is_Right_Shift_Key_Pressed         : in Boolean;
-          Is_Left_Control_Key_Pressed        : in Boolean;
-          Is_Right_Control_Key_Pressed       : in Boolean;
-          Is_Left_Alternative_Key_Pressed    : in Boolean;
-          Is_Right_Alternative_Key_Pressed   : in Boolean;
-          Is_Left_System_Key_Pressed         : in Boolean;
-          Is_Right_System_Key_Pressed        : in Boolean;
-          Is_Application_Menu_Key_Pressed    : in Boolean)
+          Key                              : in Enumerated_Key;
+          Is_Capital_Lock_Enabled          : in Boolean;
+          Is_Number_Lock_Enabled           : in Boolean;
+          Is_Left_Shift_Key_Pressed        : in Boolean;
+          Is_Right_Shift_Key_Pressed       : in Boolean;
+          Is_Left_Control_Key_Pressed      : in Boolean;
+          Is_Right_Control_Key_Pressed     : in Boolean;
+          Is_Left_Alternative_Key_Pressed  : in Boolean;
+          Is_Right_Alternative_Key_Pressed : in Boolean;
+          Is_Left_System_Key_Pressed       : in Boolean;
+          Is_Right_System_Key_Pressed      : in Boolean;
+          Is_Application_Menu_Key_Pressed  : in Boolean)
           return Character_2;
       end Implementation;
   end Neo.System.Input;

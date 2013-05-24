@@ -131,19 +131,22 @@ with
   Neo.Foundation.Text_IO,
   Neo.Foundation.Data_Types,
   Neo.Foundation.Package_Testing,
-  Neo.Foundation.Generic_Protected,
   Neo.System,
   Neo.System.Text,
   Neo.System.Memory,
-  Neo.System.Processor;
+  Neo.System.Processor;--,
+  --Neo.System.Network,
+  --Neo.System.Window,
+  --Neo.System.Exception_Handling,
+  --Neo.System.Input;
 procedure Main
   is
   begin
     --Neo.Foundation.Text_IO.Test;
     --Neo.Foundation.Package_Testing.Test;
     Neo.System.Test;
-    Neo.System.Memory.Test;
     Neo.System.Processor.Initialize;
     Neo.System.Processor.Test;
+    Neo.System.Memory.Test;
     Neo.System.Text.Test;
   end Main;
