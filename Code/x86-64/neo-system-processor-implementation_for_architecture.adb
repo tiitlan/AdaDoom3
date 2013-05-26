@@ -740,99 +740,6 @@ package body Implementation_For_Architecture
 -- The assembly block in this procedure raises an EXCEPTION_ACCESS_VIOLATION PROGRAM_ERROR, so it is disabled
 Disable_Put_Stack : Exception;
       begin
-<<<<<<< HEAD
--- SOMETHING IN THIS ASM BLOCK CAUSES AN ERROR:
---    Execution terminated by unhandled exception
---    Exception name: PROGRAM_ERROR
---    Message: EXCEPTION_ACCESS_VIOLATION
---          Asm(
---            ---------------------------------------------
---            "   movl    %%eax,       %%esi " & END_LINE &
---            "   fnstenv (%%esi)            " & END_LINE &
---            "   movl    8(%%esi),    %%esi " & END_LINE &
---            "   xor     $0xffffffff, %%esi " & END_LINE &
---            "   movl    $0x0000c000, %%edx " & END_LINE &
---            "   xor     %%eax,       %%eax " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fst     (%%edi)            " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(1)            " & END_LINE &
---            "   fst     8(%%edi)           " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(1)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(2)            " & END_LINE &
---            "   fst     16(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(2)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(3)            " & END_LINE &
---            "   fst     24(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(3)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(4)            " & END_LINE &
---            "   fst     32(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(4)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(5)            " & END_LINE &
---            "   fst     40(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(5)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(6)            " & END_LINE &
---            "   fst     48(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(6)            " & END_LINE &
---            "   shr     $2,          %%edx " & END_LINE &
---            "   movl    %%esi,       %%ecx " & END_LINE &
---            "   and     %%edx,       %%ecx " & END_LINE &
---            "   jz      fin                " & END_LINE &
---            ---------------------------------------------
---            "   fxch    %%st(7)            " & END_LINE &
---            "   fst     56(%%edi)          " & END_LINE &
---            "   inc     %%eax              " & END_LINE &
---            "   fxch    %%st(7)            " & END_LINE &
---            ---------------------------------------------
---            " fin:                         " & END_LINE ,
---            ---------------------------------------------
---            Volatile => True,
---            Inputs =>(
---              Address'Asm_Input(TO_EAX, Environment'Address),
---              Address'Asm_Input(TO_EDI, Stack'Address)),
---            Outputs =>
---        Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
-GOTO ENDING;
-=======
 Put_Line("Put_Stack disabled due to assembly block bug.");
 raise Disable_Put_Stack;
         Asm(
@@ -922,7 +829,6 @@ raise Disable_Put_Stack;
             ---------------------------------------------
           Outputs =>
             Integer_4_Unsigned'Asm_Output(FROM_EAX, Number_Of_Values));
->>>>>>> upstream/master
         if Number_Of_Values <= Stack'Size then
           for I in 1..Integer(Number_Of_Values) loop
             Put_Line("Stack" & Integer'Wide_Image(I) & ": " & Float_8_Real'Wide_Image(Stack(I)));

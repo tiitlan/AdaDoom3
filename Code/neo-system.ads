@@ -89,17 +89,10 @@ package Neo.System
       Linux_3_7_System,
       Linux_3_8_System,
       Linux_3_9_System,
-<<<<<<< HEAD
-      Windows_System, -- x86-64
-      Windows_1_System,
-      Windows_1_4_System,
-      Windows_1_4_A_System,
-=======
       Windows_System,
       Windows_1_System,
       Windows_1_4_System,
       Windows_1_4_A_System, -- x86-64
->>>>>>> upstream/master
       Windows_1_4_B_System,
       Windows_1_4_10_A_System,
       Windows_1_4_10_B_System,
@@ -110,16 +103,9 @@ package Neo.System
       Windows_2_6_System, -- Aero™
       Windows_2_6_1_System, -- AVX
       Windows_2_6_2_System,
-<<<<<<< HEAD
-      Macintosh_System, -- PowerPC
-      Macintosh_8_System,
-      Macintosh_8_5_System,
-      Macintosh_8_5_1_System,
-=======
       Macintosh_System,
       Macintosh_8_System,
       Macintosh_8_5_System, -- PowerPC
->>>>>>> upstream/master
       Macintosh_8_6_System,
       Macintosh_9_System,
       Macintosh_9_1_System,

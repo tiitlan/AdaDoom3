@@ -1,0 +1,620 @@
+V "GNAT Lib v4.7"
+A -g
+A -gnat12
+P SS ZX
+R nnnnnnnnnvnnnnnvnnvnnvnvvnvnnvnnnnnnnnnvnvnnvnnnnnnnnnnnnnvnnvnnnnnvvnvnnnnnnnnnnnnnn
+
+U neo.system.processor%b  neo-system-processor.adb  733738b4 OO PK
+W ada%s			ada.ads			ada.ali
+W ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.wide_fixed%s  a-stwifi.adb	a-stwifi.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.text_io.modular_aux%s  a-timoau.adb	a-timoau.ali
+W ada.text_io.modular_io%s
+W ada.wide_text_io.modular_io%s
+W gnat%s		gnat.ads		gnat.ali
+W gnat.traceback%s	g-traceb.adb		g-traceb.ali
+W gnat.traceback.symbolic%s  g-trasym.adb	g-trasym.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W neo%s			neo.ads			neo.ali
+W neo.system%s		neo-system.adb		neo-system.ali
+W neo.windows%s		neo-windows.adb		neo-windows.ali
+W system%s		system.ads		system.ali
+W system.concat_3%s	s-conca3.adb		s-conca3.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.exp_uns%s	s-expuns.adb		s-expuns.ali
+W system.img_enum_new%s	s-imenne.adb		s-imenne.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.img_llu%s	s-imgllu.adb		s-imgllu.ali
+W system.img_real%s	s-imgrea.adb		s-imgrea.ali
+W system.machine_code%s	s-maccod.ads		s-maccod.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+W system.wch_stw%s	s-wchstw.adb		s-wchstw.ali
+
+U neo.system.processor%s  neo-system-processor.ads  4f37f118 EE OO PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W interfaces%s		interfac.ads		interfac.ali
+W neo%s			neo.ads			neo.ali
+W neo.foundation%s	neo-foundation.ads	neo-foundation.ali
+W neo.foundation.data_types%s  neo-foundation-data_types.adb  neo-foundation-data_types.ali
+W neo.foundation.package_testing%s  neo-foundation-package_testing.adb  neo-foundation-package_testing.ali
+W neo.system%s		neo-system.adb		neo-system.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.multiprocessors%s  s-multip.adb	s-multip.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20130526115320 3ffc8e18
+D a-calend.ads		20130526115318 343c83dd
+D a-caldel.ads		20130526115318 9f20b83d
+D a-charac.ads		20130526115318 2d3ec45b
+D a-chlat1.ads		20130526115318 2825df20
+D a-comlin.ads		20130526115318 e0accaa5
+D a-except.ads		20130526115320 265fe451
+D a-exctra.ads		20130526115320 fab909d9
+D a-finali.ads		20130526115320 52ecdc1b
+D a-ioexce.ads		20130526115320 8b9de6cd
+D a-stream.ads		20130526115320 2ca4ee37
+D a-string.ads		20130526115320 90ac6797
+D a-strfix.ads		20130526115320 d07c346e
+D a-strmap.ads		20130526115320 9cb836fb
+D a-stwifi.ads		20130526115320 d82fa5f6
+D a-stwima.ads		20130526115320 09a6f5ac
+D a-stwiun.ads		20130526115320 64ae971d
+D a-tags.ads		20130526115320 6c0509d0
+D a-textio.ads		20130526115320 386df5d4
+D a-timoau.ads		20130526115320 01c06610
+D a-timoio.ads		20130526115320 d32407b9
+D a-timoio.adb		20130526115320 de0ea1c6
+D a-unccon.ads		20130526115320 f9eb8f06
+D a-uncdea.ads		20130526115320 f15a5ed1
+D a-witeio.ads		20130526115320 551dcbf1
+D a-wtmoio.ads		20130526115320 5502ed6b
+D gnat.ads		20130526115320 fd2ad2f1
+D g-traceb.ads		20130526115320 dee80ba3
+D g-trasym.ads		20130526115320 d90b540f
+D interfac.ads		20130526115320 129923ea
+D i-c.ads		20130526115320 5421119b
+D i-cstrin.ads		20130526115320 341d0ddf
+D i-cstrea.ads		20130526115320 1bd72c32
+D neo.ads		20130526125720 41464a46
+D neo-foundation.ads	20130526125720 6ee2f3af
+D neo-foundation-data_types.ads  20130526125720 7b38018a
+D neo-foundation-package_testing.ads  20130526125720 1a67cb15
+D neo-foundation-text_io.ads  20130526125720 a4497ba4
+D neo-foundation-text_io.adb  20130526125720 9b5002a6
+D neo-system.ads	20130526131038 6f4a7fe4
+D neo-system-processor.ads  20130526125720 06b8683e
+D neo-system-processor.adb  20130526125720 d3ca5efb
+D neo-system-processor-implementation_for_architecture.adb  20130526131250 ec71df85 neo.system.processor.implementation_for_architecture
+D neo-system-processor-implementation_for_compiler.adb  20130526125720 2f946935 neo.system.processor.implementation_for_compiler
+D neo-system-processor-implementation_for_operating_system.adb  20130526125720 65a0b8c1 neo.system.processor.implementation_for_operating_system
+D neo-windows.ads	20130526125720 e9b756ad
+D system.ads		20130526115322 6daf90c4
+D s-atacco.ads		20130526115320 1dc856ad
+D s-atocou.ads		20130526115320 4a9c6cb4
+D s-atocou.adb		20130526115320 c864ec10
+D s-conca3.ads		20130526115320 762a026a
+D s-crtl.ads		20130526115320 ac77b159
+D s-exctab.ads		20130526115320 66e51330
+D s-expuns.ads		20130526115320 3dcca3aa
+D s-ficobl.ads		20130526115320 443b9d66
+D s-finmas.ads		20130526115320 b95bb341
+D s-finroo.ads		20130526115320 2dd85ce2
+D s-imenne.ads		20130526115322 8707cbf0
+D s-imgint.ads		20130526115322 02dbe0c2
+D s-imgllu.ads		20130526115322 49c900c3
+D s-imgrea.ads		20130526115322 c7a851e2
+D s-maccod.ads		20130526115322 0fbb7bce
+D s-multip.ads		20130526115322 38ac9f73
+D s-osinte.ads		20130526115322 ecf1fbfd
+D s-parame.ads		20130526115322 b6e20cc0
+D s-pooglo.ads		20130526115322 542f33d0
+D s-secsta.ads		20130526115322 eea35a36
+D s-soflin.ads		20130526115322 a3409513
+D s-stache.ads		20130526115322 596fc1b4
+D s-stausa.ads		20130526115322 017a0a05
+D s-stalib.ads		20130526115322 f78bcf95
+D s-stoele.ads		20130526115322 facd7d98
+D s-stoele.adb		20130526115322 afc5dc80
+D s-stopoo.ads		20130526115322 7b8fbeee
+D s-stposu.ads		20130526115322 3d79162d
+D s-stratt.ads		20130526115322 aedef97e
+D s-tasinf.ads		20130526115322 859198ad
+D s-taspri.ads		20130526115322 196697f7
+D s-taskin.ads		20130526115322 5e24fb30
+D s-taprob.ads		20130526115322 502249e3
+D s-traent.ads		20130526115322 5221ee41
+D s-unstyp.ads		20130526115322 6ae15c76
+D s-wchcon.ads		20130526115322 bfeb2e3d
+D s-wchstw.ads		20130526115322 2d112c01
+D s-win32.ads		20130526115322 07238fa2
+X 1 ada.ads
+16K9*Ada 19e8 44|21r3 22r3 27r3 28r3
+X 8 a-exctra.ads
+47A9*Tracebacks_Array(81|46M12)<integer>
+X 12 a-string.ads
+16K13*Strings 35e16 44|21w7 22r7 27r7 28r7
+33n37*Both{33E9} 44|61r84
+X 15 a-stwifi.ads
+18K21*Wide_Fixed 254e27 44|22w15 28r15
+198V13*Trim{wide_string} 44|61s43
+X 27 gnat.ads
+34K9*GNAT 37e9 44|19r3 20r3 25r3 26r3
+X 28 g-traceb.ads
+80K14*Traceback 101e19 44|19w8 20r8 25r8 26r8
+86A12*Tracebacks_Array{8|47A9}<integer> 44|37r16
+93U14*Call_Chain 44|40s9
+X 29 g-trasym.ads
+90K24*Symbolic 101e28 44|20w18 26r18
+93V13*Symbolic_Traceback{string} 44|45s55
+X 30 interfac.ads
+36K9*Interfaces 175e15 41|18w3 24r3 43|18w3 19r3 23r3 24r3 45|19r3 23r3
+55M9*Unsigned_8
+58M9*Unsigned_16
+61M9*Unsigned_32
+64M9*Unsigned_64
+107V13*Shift_Left{61M9} 43|192s17
+108m7 Value{61M9} 43|194r19
+109i7 Amount{natural} 43|193r19
+111V13*Shift_Right{61M9} 43|189s13 351s31 533s26
+112m7 Value{61M9} 43|191r15
+113i7 Amount{natural} 43|190r15
+127V13*Shift_Left{64M9} 43|600s16
+X 31 i-c.ads
+18K20*C 230e17 43|19w14 24r14 45|19w14 23r14
+35I9*int<integer>
+43M9*unsigned
+108E9*wchar_t<wide_character>
+116A9*wchar_array(108E9)<60M9>
+X 34 neo.ads
+17K9*Neo 28e10 41|21r3 22r3 27r3 28r3 29r9 198r7 42|17r14 347r7 45|20r3 24r3
+X 35 neo-foundation.ads
+17K13*Foundation 19e21 41|21r7 22r7 27r7 28r7
+X 36 neo-foundation-data_types.ads
+84K24*Data_Types 600e32 41|21w18 27r18
+93E13*Character_1{character} 44|52r57 72r54
+97E13*Character_2{wide_character} 44|52r41 72r38
+101M13*Integer_1_Unsigned{30|55M9} 43|269r18
+114M13*Integer_2_Unsigned{30|58M9} 43|67r27 68r27 69r27 70r27 71r27 72r27
+. 74r27 75r27 77r27 78r27 315r36 426r31 503r31 555r32 735r32
+125M13*Integer_4_Unsigned_C{31|43M9} 45|36r60 159r22 160r22
+127M13*Integer_4_Unsigned{30|61M9} 41|143r25 144r25 145r25 146r14 193r29
+. 194r29 195r29 196r18 42|241r25 242r25 243r25 244r14 43|54r23 61r23 73r27
+. 76r27 134r49 139r24 141r14 143r20 147r23 150r13 151r13 152r13 153r13 209r23
+. 238r22 257r25 283r29 314r36 340r19 356r17 375r27 413r25 415r25 425r31 438r46
+. 444r39 504r31 505r31 522r15 538r13 556r32 570r13 587r19 588r19 598r13 599r13
+. 608r24 621r23 656r25 657r25 658r25 659r14 671r27 733r32 736r38 737r38 831r13
+129I13*Integer_4_Signed_C{31|35I9}
+131I13*Integer_4_Signed{integer} 41|154r45 43|38r14 672r27 44|47r23 48r23
+. 49r23 50r23 61r48
+133I13*Integer_4_Natural{natural} 44|38r16 64r31 81r33 45|35r60
+137M13*Integer_8_Unsigned{30|64M9} 41|133r14 135r14 141r14 165r18 167r18
+. 169r18 179r18 186r18 42|68r36 71r36 74r42 75r42 76r42 280r14 292r14 306r24
+. 313r14 323r21 327r50 43|180r14 184r14 188r11 225r14 585r14 600r27 600r64
+. 45|32r14 135r14 142r16 148r14 153r18 205r20
+139M13*Integer_8_Unsigned_C{137M13} 45|137r23 150r24
+154F13*Float_8_Real{long_float} 43|738r53 834r63
+184M13*Byte{101M13} 43|80r25
+189A13*String_1{string}<integer> 43|90r49 91r49 92r49 93r49 94r49 95r49 96r49
+. 97r49 98r49 99r49 100r49 101r49 216r14 216r28 216r42
+191A13*String_2{wide_string}<integer> 44|45r23 61r31
+195A13*String_2_C{31|116A9}<31|60M9>
+224P10*Access_Integer_4_Unsigned(127M13) 43|670r27
+478a5*END_LINE{189A13} 43|247r47 248r47 249r47 250r47 251r47 252r47 253r47
+. 254r47 255r47 280r49 281r49 290r52 291r52 292r52 293r52 294r52 303r46 304r46
+. 305r46 306r46 307r46 343r54 344r54 345r54 346r54 347r54 348r54 359r47 360r47
+. 361r47 362r47 363r47 364r47 453r56 454r56 455r56 456r56 457r56 525r50 526r50
+. 527r50 528r50 529r50 530r50 541r43 542r43 543r43 544r43 545r43 546r43 573r43
+. 574r43 575r43 576r43 577r43 578r43 594r25 595r25 616r46 617r46 618r46 619r46
+. 636r48 637r48 638r48 639r48 641r48 642r48 643r48 644r48 645r48 646r48 647r48
+. 649r48 752r48 753r48 754r48 755r48 756r48 757r48 758r48 759r48 760r48 762r48
+. 763r48 764r48 765r48 766r48 767r48 769r48 770r48 771r48 772r48 773r48 774r48
+. 775r48 776r48 778r48 779r48 780r48 781r48 782r48 783r48 784r48 785r48 787r48
+. 788r48 789r48 790r48 791r48 792r48 793r48 794r48 796r48 797r48 798r48 799r48
+. 800r48 801r48 802r48 803r48 805r48 806r48 807r48 808r48 809r48 810r48 811r48
+. 812r48 814r48 815r48 816r48 817r48 818r48 819r48 820r48 821r48 823r48 824r48
+. 825r48 826r48 828r48
+548V14*To_String_2_C{195A13} 45|167s26 177s29 184s29 191s29
+554V14*To_String_2{191A13} 44|45s43
+X 37 neo-foundation-package_testing.ads
+23K24*Package_Testing 44e37 41|22w18 28r18
+33U15*Put_Title 42|63s9
+35U15*Hang_Window 42|216s9 220s11
+X 38 neo-foundation-text_io.ads
+67U15*Put 44|87s21
+70U15*Put 42|148s15 156s15 44|63s19 65s21 67s19 80s21 82s23 84s21
+73U15*Put_Line 42|68s9 69s9 71s9 72s9 74s9 75s9 76s9 77s9 81s15 84s15 88s15
+. 91s15 94s15 97s15 102s17 105s17 108s17 111s17 115s15 118s15 121s15 124s15
+. 127s15 130s15 133s15 136s15 139s15 142s15 145s15 150s17 159s19 161s19 168s15
+. 171s15 174s15 177s15 180s15 183s15 186s15 189s15 192s15 195s15 198s15 201s15
+. 207s11 212s13 219s11 341s9 43|743s1 834s13 842s11 844s9 845s9 846s9 847s9
+. 848s9 849s9 850s9 851s9
+94U15*New_Line 42|152s17 164s17 44|56s15 79s21 100s13
+99v14*To_Radian_Image 43|733r16 735r16
+X 40 neo-system.ads
+27K13*System 34|17k9 40|171e17 41|29r13 198r11 42|17r18 347r11
+32X5*System_Call_Failure 42|285r36 297r36 318r36 344r36 43|662r15 45|38r15
+. 140r17 172r21 203r21
+33X5*Unsupported_Feature 42|218r14 285r14 297r14 305r20 318r14 344r14 43|229r17
+82n7*Linux_3_System{71E10} 43|409r23
+104n7*Windows_2_6_1_System{71E10} 43|409r62
+119n7*Macintosh_10_6_System{71E10} 43|409r39
+141V14*Is_Newer_Than{boolean} 43|409s9
+X 41 neo-system-processor.ads
+29K20*Processor 40|27k13 41|198l18 198e27 42|17b25 347l18 347t27
+34X5*Invalid_Operation 43|475r19
+35X5*Denormalized_Operand 43|478r19
+36X5*Divide_By_Zero 43|481r19
+37X5*Numeric_Overflow 43|484r19
+38X5*Numeric_Underflow 43|487r19
+39X5*Inexact_Result 43|490r19
+40X5*Stack_Fault 43|493r19
+44E10*Enumerated_Vendor 50e37 66r16 137r14 175r18 42|77r42 274r14 43|200r14
+46n7*Generic_Vendor{44E10}
+47n7*ARM_Licenced_Vendor{44E10} 69r16 42|79r16
+48n7*Intel_Vendor{44E10} 77r16 42|99r16 43|217r13 228r25
+49n7*Apple_IBM_Motorola_Vendor{44E10} 72r16 42|86r16
+50n7*Advanced_Micro_Devices_Vendor{44E10} 77r31 105r20 42|99r31 100r35 43|219r13
+. 377r31
+51E10*Enumerated_Precision 55e33 131r22 184r26 42|262r22 43|553r22
+53n7*Single_Precision{51E10} 43|559r16
+54n7*Double_Precision{51E10} 43|561r16
+55n7*Double_Extended_Precision{51E10} 42|65r23 43|563r16
+56E10*Enumerated_Rounding 61e25 129r21 182r25 42|256r21 43|501r22
+58n7*Up_Rounding{56E10} 43|512r16
+59n7*Down_Rounding{56E10} 43|510r16
+60n7*Nearest_Rounding{56E10} 42|66r22 43|508r16
+61n7*Truncate_Rounding{56E10} 43|514r16
+65R10*Record_Specifics 66d7 116e17 139r14 177r18 42|61r28 268r14 43|372r14
+. 374r27
+66e7*Vendor{44E10} 68r14 104r18
+70b13*Has_NEON{boolean} 42|80r26
+71b13*Has_Vector_Floating_Point{boolean} 42|83r26
+73b13*Has_Vector_Multimedia_Instructions{boolean} 42|87r26
+74b13*Has_Vector_Scalar_Instructions{boolean} 42|90r26
+75b13*Has_Altivec_Additional_Registers{boolean} 42|93r26
+76b13*Has_Altivec{boolean} 42|96r26
+78b13*Has_Multi_Media_Extensions{boolean} 42|114r26 43|385m19
+79b13*Has_Streaming_SIMD_Extensions_1{boolean} 42|123r26 43|386m19
+80b13*Has_Streaming_SIMD_Extensions_2{boolean} 42|126r26 43|387m19
+81b13*Has_Streaming_SIMD_Extensions_3{boolean} 42|129r26 43|388m19
+82b13*Has_Streaming_SIMD_Extensions_3_Supplement{boolean} 42|132r26 43|389m19
+83b13*Has_Streaming_SIMD_Extensions_4_1{boolean} 42|135r26 43|390m19
+84b13*Has_Streaming_SIMD_Extensions_4_2{boolean} 42|138r26 43|391m19 408r19
+85b13*Has_Carryless_Multiplication_Of_Two_64_Bit{boolean} 42|176r26 43|392m19
+86b13*Has_Advanced_Vector_Extensions_Enabled{boolean} 42|149r32 157r32 43|416m21
+87b13*Has_Advanced_Vector_Extensions_1{boolean} 42|147r26 158r34 43|395m19
+88b13*Has_Advanced_Vector_Extensions_2{boolean} 42|155r26 43|396m19
+89b13*Has_Advanced_Encryption_Service{boolean} 42|188r26 43|397m19
+90b13*Has_Advanced_State_Operations{boolean} 42|191r26 43|401m19
+91b13*Has_Bit_Manipulation_Extensions_1{boolean} 42|141r26 43|393m19
+92b13*Has_Bit_Manipulation_Extensions_2{boolean} 42|144r26 43|394m19
+93b13*Has_Fused_Multiply_Add_3{boolean} 42|117r26 43|402m19
+94b13*Has_Fused_Multiply_Add_4{boolean} 42|120r26 43|403m19
+95b13*Has_Hyperthreading{boolean} 42|197r26 43|400m19
+96b13*Has_High_Precision_Convert{boolean} 42|185r26 43|404m19
+97b13*Has_Half_Precision_Floating_Point_Convert{boolean} 42|182r26 43|398m19
+98b13*Has_Extended_States_Enabled{boolean} 42|179r26 43|383m19
+99b13*Has_Population_Count{boolean} 42|170r26 43|384m19
+100b13*Has_Context_ID_Manager{boolean} 42|167r26
+101b13*Has_Conditional_Move{boolean} 42|200r26 43|399m19
+102b13*Has_Leading_Zero_Count{boolean} 42|173r26 43|406m19
+103b13*Has_Extended_Operation_Support{boolean} 42|194r26 43|405m19
+106b17*Has_Streaming_SIMD_Extensions_4_Supplement{boolean} 42|107r28 43|381m21
+107b17*Has_3DNow{boolean} 42|101r28 43|378m21
+108b17*Has_3DNow_Supplement{boolean} 42|104r28 43|379m21
+109b17*Has_Multi_Media_Extensions_Supplement{boolean} 42|110r28 43|380m21
+120U15*Initialize 42|225b15
+121U15*Test 42|31b15 221l11 221t15
+122U15*Check_Exceptions 42|67s9 230b15
+123U15*Clear_Stack 42|210s11 235b15
+124V14*Is_Stack_Empty{boolean} 42|206s12 211s14 249b14
+126U15*Put_Stack 42|209s11 215s9 333b15
+127U15*Put_Trace 42|38s11 338b15 346l11 346t20
+128U15*Set_Rounding 129>7 42|66s9 255b15
+129e7 Rounding{56E10} 42|256b7
+130U15*Set_Precision 131>7 42|65s9 261b15
+131e7 Precision{51E10} 42|262b7
+132V14*Get_Number_Of_Cores{36|137M13} 42|75s72 291b14 308l11 308t30
+134V14*Get_Speed_In_Megahertz{36|137M13} 42|76s72 312b14 329l11 329t33
+136V14*Get_Vendor{44E10} 42|273b14
+138V14*Get_Specifics{65R10} 42|61s48 267b14
+140V14*Get_Clock_Ticks{36|137M13} 42|68s66 71s66 74s72 279b14 287l11 287t26
+. 325s24 327s23
+142V14*Compare_And_Exchange{36|127M13} 143<7 144>7 145>7 42|240b14
+143m7 Destination{36|127M13} 42|241b7
+144m7 Comparand{36|127M13} 42|242b7
+145m7 Item{36|127M13} 42|243b7
+153o5 PROCESSOR_SPEED_TIMING_DELAY{duration} 42|326r21 327r75
+154i5 TRACE_LIMIT{36|131I13} 43|675r36 44|37r36
+158K13 Implementation_For_Compiler 161l11 161e38 42|22b18 342r9 44|30b14
+. 103l7 103t34
+160U19*Put_Trace 42|342s37 44|35b15 102l11 102t20
+162K13 Implementation_For_Operating_System 170l11 170e46 42|26b18 283r16
+. 295r16 316r16 45|26b14 208l7 208t42
+164V18*Get_Clock_Ticks{36|137M13} 42|283s52 45|134b14 143l11 143t26
+166V18*Get_Number_of_Cores{36|137M13} 42|295s52 45|31b14 130l11 130t30
+168V18*Get_Speed_In_Megahertz{36|137M13} 42|316s52 45|147b14 207l11 207t33
+171K13 Implementation_For_Architecture 197l11 197e42 42|24b18 226r15 231r15
+. 236r15 245r15 251r15 257r15 263r15 269r15 275r15 286r18 303r22 334r15 345r11
+. 43|28b14 854l7 854t38
+173U19*Initialize 42|226r47 43|236b15 367l11 367t21
+174V18*Get_Vendor{44E10} 42|275r47 43|199b14 220l11 220t21 228s12 374s44
+176V18*Get_Specifics{65R10} 42|269r47 43|371b14 419l11 419t24
+178V18*Get_Number_of_Cores{36|137M13} 42|303s54 43|224b14 232l11 232t30
+180U19*Check_Exceptions 42|231r47 43|423b15 496l11 496t27
+181U19*Set_Rounding 182>11 42|257r47 43|500b15 548l11 548t23
+182e11 Rounding{56E10} 43|501b7 507r14
+183U19*Set_Precision 184>11 42|263r47 43|552b15 580l11 580t24
+184e11 Precision{51E10} 43|553b7 558r14
+185V18*Get_Clock_Ticks{36|137M13} 42|286s50 43|584b14 601l11 601t26
+187U19*Put_Stack 42|334r47 43|730b15 853l11 853t20
+188U19*Put_Trace 42|345s43 43|668b15 726l11 726t20
+189V18*Is_Stack_Empty{boolean} 42|251r47 43|605b14 623l9 623t23
+191U19*Clear_Stack 42|236r47 43|627b15 651l11 651t22
+192V18*Compare_And_Exchange{36|127M13} 193<11 194>11 195>11 42|245r47 43|655b14
+. 664l11 664t31
+193m11 Destination{36|127M13} 43|656b7
+194m11 Comparand{36|127M13} 43|657b7
+195m11 Item{36|127M13} 43|658b7
+X 42 neo-system-processor.adb
+34U17 A 34b17 39l13 39t14 45s11
+41U17 B 41b17 46l13 46t14 52s11
+48U17 C 48b17 53l13 53t14 59s11
+55U17 D 55b17 60l13 60t14 64s9
+61r7 Specifics{41|65R10} 77r71 78r14 80r16 83r16 87r16 90r16 93r16 96r16
+. 100r16 101r18 104r18 107r18 110r18 114r16 117r16 120r16 123r16 126r16 129r16
+. 132r16 135r16 138r16 141r16 144r16 147r16 149r22 155r16 157r22 158r24 167r16
+. 170r16 173r16 176r16 179r16 182r16 185r16 188r16 191r16 194r16 197r16 200r16
+299q11 Try_Assembly 307l17 307e29
+320q11 Time_Processor 328l17 328e31
+323m13 Start{36|137M13} 325m15 327r41
+X 43 neo-system-processor-implementation_for_architecture.adb
+33X5 CPUID_Is_Not_Supported 241r17 259r19
+37I10 Integer_Bit_Field_Element<integer> 56r23 57r23 63r23 190r33 193r37
+43E10 Enumerated_Register 48e20 55r23 62r23 140r24
+45n7 EAX_Register{43E10} 55r52 62r52 155r16
+46n7 EBX_Register{43E10} 119r87 120r87 121r87 122r87 132r87 133r87 157r16
+47n7 ECX_Register{43E10} 102r87 103r87 104r87 105r87 106r87 107r87 108r87
+. 109r87 110r87 111r87 112r87 123r87 124r87 125r87 126r87 127r87 131r87 159r16
+48n7 EDX_Register{43E10} 113r87 114r87 115r87 116r87 117r87 118r87 128r87
+. 129r87 130r87 161r16
+52R10 Record_Value 58e17 131r49 132r49 133r49 179r18 183r18
+54m9*Function_ID{36|127M13} 194r49
+55e9*Register{43E10} 194r68
+56i9*Start_Bit{37I10} 181r41 190r89
+57i9*End_Bit{37I10} 181r25 190r73 193r76
+59R10 Record_Feature 64e17 102r49 103r49 104r49 105r49 106r49 107r49 108r49
+. 109r49 110r49 111r49 112r49 113r49 114r49 115r49 116r49 117r49 118r49 119r49
+. 120r49 121r49 122r49 123r49 124r49 125r49 126r49 127r49 128r49 129r49 130r49
+. 169r20
+61m9*Function_ID{36|127M13} 173r39
+62e9*Register{43E10} 173r60
+63i9*Bit{37I10} 173r93
+65R10 Record_x86_Environment 80e7 445r39 609r24 629r22 739r38
+67m9*Control_Word{36|114M13} 844r61
+68m9*Unused_A{36|114M13}
+69m9*Status_Word{36|114M13} 465m31 465r62 845r61
+70m9*Unused_B{36|114M13}
+71m9*Tags{36|114M13} 847r61
+72m9*Unused_C{36|114M13}
+73m9*Program_Counter{36|127M13} 851r61
+74m9*CS_Selector{36|114M13} 846r61
+75m9*Operation_Code{36|114M13} 850r61
+76m9*Data_Offset{36|127M13} 848r61
+77m9*Data_Selector{36|114M13} 849r61
+78m9*Unused_D{36|114M13}
+84b5 DO_CRASH_ON_INEXACT_RESULT{boolean} 317r20
+85b5 DO_CRASH_ON_DIVIDE_BY_ZERO{boolean} 326r20
+86b5 DO_CRASH_ON_NUMERIC_OVERFLOW{boolean} 323r20
+87b5 DO_CRASH_ON_INVALID_OPERATION{boolean} 332r20
+88b5 DO_CRASH_ON_NUMERIC_UNDERFLOW{boolean} 320r20
+89b5 DO_CRASH_ON_DENORMALIZED_OPERAND{boolean} 329r20
+90a5 TO_ESI{36|189A13}
+91a5 TO_EDI{36|189A13} 749r31
+92a5 TO_EAX{36|189A13} 147r52 209r52 277r62 287r49 300r43 339r48 355r46 431r43
+. 436r41 450r49 462r47 468r47 521r44 537r42 569r42 613r41 633r41 748r31 841r43
+93a5 TO_EBX{36|189A13}
+94a5 TO_ECX{36|189A13} 340r48 356r46 413r54 522r44 538r42 570r42
+95a5 TO_EDX{36|189A13}
+96a5 FROM_EAX{36|189A13} 150r43 257r55 415r55 598r43 621r53 831r43
+97a5 FROM_EBX{36|189A13} 151r43 212r45 283r59
+98a5 FROM_ECX{36|189A13} 152r43 213r45
+99a5 FROM_EDX{36|189A13} 153r43 214r45 599r43
+100a5 VENDOR_INTEL{36|189A13} 216r56
+101a5 VENDOR_ADVANCED_MICRO_DEVICES{36|189A13}
+102r5 INTEL_SSE3{59R10} 388r76
+103r5 INTEL_PCLMULQDQ{59R10} 392r76
+104r5 INTEL_SSSE3{59R10} 389r76
+105r5 INTEL_FMA3{59R10} 402r76
+106r5 INTEL_SSE4_1{59R10} 390r76
+107r5 INTEL_SSE4_2{59R10} 391r76
+108r5 INTEL_POPCNT{59R10} 384r76
+109r5 INTEL_AES{59R10} 397r76
+110r5 INTEL_OSXSAVE{59R10} 383r76
+111r5 INTEL_AVX{59R10} 395r76
+112r5 INTEL_F16C{59R10} 398r76
+113r5 INTEL_CMOV{59R10} 399r76
+114r5 INTEL_MMX{59R10} 385r76
+115r5 INTEL_FXSR{59R10} 262r23 335r27 401r76 428r23 447r29 517r23 837r23
+116r5 INTEL_SSE{59R10} 386r76
+117r5 INTEL_SSE2{59R10} 387r76
+118r5 INTEL_HTT{59R10} 400r76
+119r5 INTEL_BMI1{59R10} 393r76
+120r5 INTEL_AVX2{59R10} 396r76
+121r5 INTEL_BMI2{59R10} 394r76
+122r5 INTEL_inVPCID{59R10}
+123r5 AMD_ABM{59R10} 406r76
+124r5 AMD_SSE4_A{59R10} 381r78
+125r5 AMD_XOP{59R10} 405r76
+126r5 AMD_FMA4{59R10} 403r76
+127r5 AMD_CVT16{59R10} 404r76
+128r5 AMD_MMX_PLUS{59R10} 380r78
+129r5 AMD_3DNOW_PLUS{59R10} 379r78
+130r5 AMD_3DNOW{59R10} 378r78
+131r5 AMD_CPU_COUNT{52R10} 231r26
+132r5 INTEL_CPU_COUNT{52R10}
+133r5 INTEL_APIC{52R10}
+134m5 PROLOGUE_SIGNATURE{36|127M13}
+138V14 Execute_CPUID{36|127M13} 138b14 139>7 140>7 164l11 164t24 173s17 194s29
+139m7 Function_ID{36|127M13} 147r60
+140e7 Register{43E10} 154r14
+143m7 A{36|127M13} 150m53 150r53 156r20
+143m10 B{36|127M13} 151m53 151r53 158r20
+143m13 C{36|127M13} 152m53 152r53 160r20
+143m16 D{36|127M13} 153m53 153r53 162r20
+168V14 Is_Enabled{boolean} 168b14 169>7 174l11 174t21 262s12 335s16 378s67
+. 379s67 380s67 381s67 383s65 384s65 385s65 386s65 387s65 388s65 389s65 390s65
+. 391s65 392s65 393s65 394s65 395s65 396s65 397s65 398s65 399s65 400s65 401s65
+. 402s65 403s65 404s65 405s65 406s65 428s12 447s18 517s12 837s12
+169r7 Feature{59R10} 173r31 173r52 173r85
+178V14 Get_Value{36|137M13} 179>7 182b14 195l11 195t20 231s16
+179r7 Value{52R10} 181r19 181r35 183b7 190r67 190r83 193r70 194r43 194r62
+202A12 Array_String_Segment(character)<integer> 205r17 212r13 213r13 214r13
+205a7 B{202A12} 212m55 212r55 216r23
+205a10 D{202A12} 214m55 214r55 216r37
+205a13 C{202A12} 213m55 213r55 216r51
+238m7 Data{36|127M13} 257m65 257r65 258r14 283m69 283r69 284r19 287m57 287r57
+. 300m51 300r51 339m56 339r56
+264q11 Enable_Denormals_Are_Zero 297l17 297e42
+267A18 Array_Save_Area(36|101M13)<integer> 272r29 273r33
+271P18 Access_Array_Save_Area(267A18) 277r29
+273a13 Save_Area{267A18} 277m70 277r70
+311q9 Set_Exceptions 366l15 366e29
+314m11 Exception_Mask{36|127M13} 318m15 321m15 321r33 324m15 324r33 327m15
+. 327r33 330m15 330r33 333m15 333r33 340r56 351m13 351r43 356r54
+315m11 Other_Data{36|114M13} 355m54 355r54
+374r7 Specifics{41|65R10} 377r12 378m11 379m11 380m11 381m11 383m9 384m9
+. 385m9 386m9 387m9 388m9 389m9 390m9 391m9 392m9 393m9 394m9 395m9 396m9
+. 397m9 398m9 399m9 400m9 401m9 402m9 403m9 404m9 405m9 406m9 408r9 416m11
+. 418r16
+375m7 Data{36|127M13} 415m65 415r65 416r64
+425m7 Data{36|127M13} 431m51 431r51 438m9 438r18 439r12 474r15 477r15 480r15
+. 483r15 486r15 489r15 492r15
+426m7 Data_From_x87{36|114M13} 436m49 436r49 438r65
+441q11 Clear_Exception_Bits 473l17 473e37
+444m13 Data_From_SIMD{36|127M13} 450m57 450r57
+445r13 x86_Environment{65R10} 462m55 462r55 465m15 465r46 468m55 468r55
+503m7 Other_Data{36|114M13} 537m50 537r50
+504m7 Data{36|127M13} 521m52 521r52
+505m7 Rounding_Mask{36|127M13} 509m13 511m13 513m13 515m13 522r52 533m9 533r38
+. 538r50
+555m7 Blank_Memory{36|114M13} 569m50 569r50
+556m7 Precision_Mask{36|127M13} 560m13 562m13 564m13 570r50
+587m7 Low_Part{36|127M13} 598m53 598r53 600r83
+588m7 High_Part{36|127M13} 599m53 599r53 600r46
+608m7 Result{36|127M13} 621m63 621r63 622r16
+609r7 Data{65R10} 613m49 613r49
+629r7 Data{65R10} 633m49 633r49
+670p7 Value_At_Position{36|224P10}
+671m7 Data{36|127M13}
+672i7 J{36|131I13}
+673m7 Base_Pointer{47|64M9}
+674m7 Mid_Point{47|64M9}
+675a7 Traces(47|64M9)
+732V16 To_Image[38|99]{36|191A13} 39|320b14 43|842s36 848s40 851s40
+734V16 To_Image[38|99]{36|191A13} 39|320b14 43|844s40 845s40 846s40 847s40
+. 849s40 850s40
+736m7 Number_Of_Values{36|127M13} 831m53 831r53 832r12 833r31
+737m7 Data_From_Extensions{36|127M13} 841m51 841r51 842r45
+738a7 Stack(36|154F13) 749m39 749r39 832r32 834r87
+739r7 Environment{65R10} 748m39 748r39 844r49 845r49 846r49 847r49 848r49
+. 849r49 850r49 851r49
+741X1 Disable_Put_Stack 744r7 852r16
+833i15 I{integer} 834r51 834r93
+X 44 neo-system-processor-implementation_for_compiler.adb
+37a7 Trace{8|47A9} 40m20 40r20 45r74
+38i7 Length{36|133I13} 40m27 40r27 45r83 64r55 81r57
+42q9 Sweep_Traceback 101l15 101e30
+45a11 Traceback{36|191A13} 52r19 53r28 67r44 69r38 70r24 72r23 76r20 77r31
+. 77r55 87r25
+46b11 Skip_Next{boolean} 78m21 86r26 90m23
+47i11 To_Skip{36|131I13} 89r32
+48i11 Skips{36|131I13} 89r24 91m23 93m23 93r32
+49i11 Current{36|131I13} 52r29 53r18 67r54 67r67 69r24 71m19 73m19 76r30
+50i11 Index{36|131I13} 61r76 98m15 98r24
+58q15 Put_With_Padded_Index 68l21 68e42
+61a17 Index_Image{36|191A13} 64r72 67r23
+64i23 I{integer}
+69i19 I{integer} 70r20 71r30 72r33 73r30 77r22 77r65 77r68 87r35
+81i25 I{integer}
+X 45 neo-system-processor-implementation_for_operating_system.adb
+35i7 Result{36|133I13}
+36m7 Size{36|125M13}
+137m7 Ticks{36|139M13} 139m38 139r38 142r35
+150m7 Result{36|139M13} 152m40 152r40 153r37
+156q9 Look_In_The_Registry 206l15 206e35
+159m11 Length{36|125M13} 181m29 181r29 188m29 188r29 195m29 195r29
+160m11 Speed{36|125M13} 180m29 180r29 187m29 187r29 194m29 194r29 205r39
+161m11 Key{47|64M9} 170m26 170r26 176r29 183r29 190r29 199r35
+162b11 Do_Raise{boolean} 197m15 202r16
+X 46 neo-windows.ads
+30K13*Windows 45|20w7 24r7 46|1338e18
+42m5*KEY_READ{36|125M13} 45|169r26
+43m5*HKEY_LOCAL_MACHINE{36|125M13} 45|166r26
+121m5*NO_ERROR{36|125M13} 45|170r42 181r48 188r48 195r48
+222i5*FAILED{36|129I13} 45|139r55 152r59
+770V14*Registry_Close_Key{36|129I13} 45|199s16
+773V14*Registry_Open_Key{36|125M13} 45|165s13
+774m7 Key{36|125M13} 45|166r15
+775a7 Sub_Key{36|195A13} 45|167r15
+776m7 Options{36|125M13} 45|168r15
+777m7 Desired{36|125M13} 45|169r15
+778m7 Result{47|64M9} 45|170r15
+780V14*Registry_Query_Value{36|125M13} 45|175s13 182s13 189s13
+781m7 Key{47|64M9} 45|176r15 183r15 190r15
+782a7 Value_Name{36|195A13} 45|177r15 184r15 191r15
+783m7 Reserved{47|64M9} 45|178r15 185r15 192r15
+784m7 Kind{47|64M9} 45|179r15 186r15 193r15
+785m7 Data{47|64M9} 45|180r15 187r15 194r15
+786m7 Data_Size{47|64M9} 45|181r15 188r15 195r15
+1053V14*Query_Performance_Counter{36|129I13} 45|139s12
+1056V14*Query_Performance_Frequency{36|129I13} 45|152s12
+X 47 system.ads
+37K9*System 41|19w3 20r3 25r3 26r3 43|20w3 21r3 25r3 26r3 44|18w3 24r3 45|18w3
+. 22r3 47|195e11
+64M9*Address 43|240r12 242r15 287r31 300r25 339r19 355r17 431r25 436r23 450r31
+. 462r29 468r29 521r15 537r13 569r13 613r23 633r23 673r27 674r27 675r52 748r13
+. 749r13 841r25 45|161r22
+66m4*Null_Address{64M9} 43|673r63 674r63 675r74 44|37r63 45|161r46 178r29
+. 179r29 185r29 186r29 192r29 193r29
+X 62 s-maccod.ads
+36K16*Machine_Code 43|21w10 26r10 62|130e24
+43I9*Asm_Input_Operand
+44I9*Asm_Output_Operand
+51A9*Asm_Input_Operand_List(43I9)<integer>
+54A9*Asm_Output_Operand_List(44I9)<integer>
+68U14*Asm 43|336s15 352s13 518s11 534s9 566s9 745s9
+69s6 Template{string} 43|341r17 357r15 523r13 539r11 571r11 750r11
+70i6 Outputs{44I9} 43|830r11
+71a6 Inputs{51A9} 43|338r17 354r15 520r13 536r11 568r11 747r11
+73b6 Volatile{boolean} 43|337r17 353r15 519r13 535r11 567r11 746r11
+75U14*Asm 43|145s9 207s9 590s9
+76s6 Template{string} 43|148r11 210r11 592r11
+77a6 Outputs{54A9} 43|149r11 211r11 597r11
+78i6 Inputs{43I9} 43|147r11 209r11
+80b6 Volatile{boolean} 43|146r11 208r11 591r11
+82U14*Asm 43|243s11 275s15 285s17 298s11 411s11 429s11 434s9 448s17 460s15
+. 466s15 470s15 611s9 631s9 838s11
+83s6 Template{string} 43|245r13 278r17 288r19 301r13 414r13 432r13 437r11
+. 451r19 463r17 469r17 472r17 614r11 634r11 839r13
+84i6 Outputs{44I9} 43|257r13 283r17 415r13 621r11
+85i6 Inputs{43I9} 43|277r17 287r19 300r13 413r13 431r13 436r11 450r19 462r17
+. 468r17 613r11 633r11 841r13
+87b6 Volatile{boolean} 43|244r13 276r17 286r19 299r13 412r13 430r13 435r11
+. 449r19 461r17 467r17 471r17 612r11 632r11 840r13
+X 63 s-multip.ads
+16K16*Multiprocessors 41|20w10 26r10 63|28e27
+19I9*CPU_Range<integer>
+21I12*CPU{19I9}
+25V13*Number_Of_CPUs{21I12} 42|306s43
+X 81 s-traent.ads
+46M12*Traceback_Entry{47|64M9}
+
