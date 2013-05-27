@@ -37,7 +37,7 @@ package body Implementation
       is
       Name : aliased Record_Unix_Name := (others => <>);
       begin
-        if Get_Unix_Name(Name'Access) /= SUCCESS then
+        if Get_Unix_Name(Name'access) /= SUCCESS then
           raise System_Call_Failure;
         end if;
         if
@@ -136,8 +136,9 @@ package body Implementation
   -- Execute_Application --
   -------------------------
     procedure Execute_Application(
-      Do_Quit         : in Boolean;
-      Executable_Path : in String_2)
+      Executable_Path : in String_2;
+      Do_Fullscreen   : in Boolean;
+      Do_Quit         : in Boolean)
       is
       begin
         raise Unsupported_Feature;
@@ -150,6 +151,6 @@ package body Implementation
       is
       begin
         raise System_Call_Failure;
-        return Get_Application_Bit_Size;
+        return WORD_SIZE;
       end Get_Bit_Size;
   end Implementation;

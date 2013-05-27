@@ -26,6 +26,7 @@
 --  ac_GLfloat        access constant GLfloat
 --  ac_GLdouble       access constant GLdouble
 --  ac_GLshort        access constant GLshort
+--  Win32_ULONG_PTR   Access_Integer_Address
 --  Win32_PCBYTE      access constant Integer_1_Unsigned_C
 --  Win32_FLOAT       Float_4_Real_C
 --  Win32_DOUBLE      Float_8_Real_C
@@ -83,11 +84,16 @@ use
   Ada.Strings.Wide_Fixed;
 package Neo.Foundation.Data_Types
   is
+  ----------------
+  -- Exceptions --
+  ----------------
+    C_String_Is_Not_Null_Terminated : Exception;
+    C_String_Is_Empty               : Exception;
   -------------
   -- Numbers --
   -------------
     type Integer_Address
-      is mod Memory_Size;
+      is mod MEMORY_SIZE;
     subtype Character_1_C
       is Interfaces.C.Char;
     subtype Character_1
@@ -217,6 +223,8 @@ package Neo.Foundation.Data_Types
       is access constant Character_2_C;
     type Access_Character_2_C
       is access all Character_2_C;
+    type Access_Integer_Address
+      is access all Integer_Address;
     type Access_Integer_8_Unsigned_C
       is access all Integer_8_Unsigned_C;
     type Access_Integer_4_Unsigned_C
@@ -227,6 +235,8 @@ package Neo.Foundation.Data_Types
       is access all Integer_4_Signed_C;
     type Access_Integer_2_Unsigned_C
       is access all Integer_2_Unsigned_C;
+    type Access_Integer_1_Unsigned_C
+      is access all Integer_1_Unsigned_C;
   ------------
   -- Arrays --
   ------------
@@ -471,8 +481,9 @@ package Neo.Foundation.Data_Types
     C_TRUE             : constant Integer_4_Signed_C := 1;
     C_FALSE            : constant Integer_4_Signed_C := 0;
     NULL_CHARACTER_1_C : constant Character_1_C      := Interfaces.C.NUL;
-    NULL_CHARACTER_1   : constant Character_1        := Character_1'Val(0);
-    NULL_CHARACTER_2   : constant Character_2        := Character_2'Val(0);
+    NULL_CHARACTER_2_C : constant Character_2_C      := Character_2_C'val(Character_1_C'pos(NULL_CHARACTER_1_C));
+    NULL_CHARACTER_1   : constant Character_1        := Character_1'val(0);
+    NULL_CHARACTER_2   : constant Character_2        := Character_2'val(0);
     NULL_STRING_1      : constant String_1           := "" & NULL_CHARACTER_1;
     NULL_STRING_2      : constant String_2           := "" & NULL_CHARACTER_2;
     END_LINE           : constant String_1(1..2)     := Ascii.CR & Ascii.LF;
@@ -528,7 +539,7 @@ package Neo.Foundation.Data_Types
       Item : in String_2)
       return Access_Character_2_C;
     function To_Access_Constant_Character_1_C(
-      Item : in String_1_C)
+      Item : in String_1)
       return Access_Constant_Character_1_C;
     function To_Access_Constant_Character_2_C(
       Item : in String_2)
@@ -588,7 +599,7 @@ private
       end record;
       pragma Unchecked_Union(Record_Endian_Test);
       for Record_Endian_Test'Size
-        use 2*8;
+        use 2 * Byte'size;
   ---------------
   -- Variables --
   ---------------

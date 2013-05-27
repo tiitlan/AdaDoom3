@@ -323,8 +323,8 @@ package body Neo.System.Processor
             Start : Integer_8_Unsigned := 0;
             begin
               Start := Get_Clock_Ticks;
-              delay PROCESSOR_SPEED_TIMING_DELAY;
-              return (Get_Clock_Ticks - Start) * Integer_8_Unsigned(1.0 / PROCESSOR_SPEED_TIMING_DELAY);
+              delay DELAY_FOR_PROCESSOR_SPEED_TIMING;
+              return (Get_Clock_Ticks - Start) * Integer_8_Unsigned(1.0 / DELAY_FOR_PROCESSOR_SPEED_TIMING);
             end Time_Processor;
       end Get_Speed_In_Megahertz;
   ---------------

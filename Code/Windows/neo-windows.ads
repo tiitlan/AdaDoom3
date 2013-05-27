@@ -32,10 +32,11 @@ package Neo.Windows
   ---------------
   -- Constants --
   ---------------
-    GENERIC_CURSOR                             : constant Address              := To_Unchecked_Address(16#0000_7F00#);
-    GENERIC_ICON                               : constant Address              := To_Unchecked_Address(16#0000_7F00#);
-    BRUSH_GRAY                                 : constant Address              := To_Unchecked_Address(16#0000_0011#);
-    ERROR_INSUFFICIENT_BUFFER                  : constant Integer_4_Unsigned_C := 16#0_0#; -- ???
+    GENERIC_CURSOR                             : constant Integer_Address      := 16#7F00#;
+    GENERIC_ICON                               : constant Integer_Address      := 16#7F00#;
+    BRUSH_GRAY                                 : constant Integer_Address      := 16#0011#;
+    ERROR_INSUFFICIENT_BUFFER                  : constant Integer_4_Unsigned_C := 16#0000_007A#;
+    CORES_SHARE_SINGLE_PROCESSOR               : constant Integer_4_Unsigned_C := 16#0000_0000#;
     STOP_READING_TOP_LEVEL_DEVICES             : constant Integer_4_Unsigned_C := 16#0000_0001#;
     TAKE_INPUT_ON_NON_ACTIVE                   : constant Integer_4_Unsigned_C := 16#0000_0100#;
     CODE_PAGE_UTF_8                            : constant Integer_4_Unsigned_C := 16#0000_FDE9#;
@@ -231,7 +232,7 @@ package Neo.Windows
     DATA_VERTICAL_RESOLUTION                   : constant Integer_4_Signed_C   := 10;
     MILLISECOND_TIMEOUT_FORCE_WRITE            : constant Integer_4_Signed_C   := 500;
     MOUSE_WHEEL_DELTA                          : constant Integer_2_Signed     := 120;
-    MAXIMUM_PATH_FOR_CREATE_FILE               : constant Integer_4_Signed     := 32_767;
+    MAXIMUM_PATH_LENGTH                        : constant Integer_Size_C       := 32_767;
   -------------
   -- Arrays --
   ------------
@@ -250,59 +251,48 @@ package Neo.Windows
 -- #ifndef _MSC_VER
 -- typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
 -- #endif
-
 -- typedef void* (CALLBACK *KbdLayerDescriptor) (VOID);
-
 -- #define CAPLOK          0x01
 -- #define WCH_NONE        0xF000
 -- #define WCH_DEAD        0xF001
-
 -- typedef struct _VK_TO_WCHARS {
 --         BYTE VirtualKey;
 --         BYTE Attributes;
 --         WCHAR wch[];
 -- } VK_TO_WCHARS, *PVK_TO_WCHARS;
-
 -- typedef struct _LIGATURE {
 --         BYTE VirtualKey;
 --         WORD ModificationNumber;
 --         WCHAR wch[];
 -- } LIGATURE, *PLIGATURE;
-
 -- typedef struct _VK_TO_BIT {
 --         BYTE Vk;
 --         BYTE ModBits;
 -- } VK_TO_BIT, *PVK_TO_BIT;
-
 -- typedef struct _MODIFIERS {
 --         PVK_TO_BIT pVkToBit; // __ptr64
 --         WORD wMaxModBits;
 --         BYTE ModNumber[];
 -- } MODIFIERS, *PMODIFIERS;
-
 -- typedef struct _VSC_VK {
 --         BYTE Vsc;
 --         USHORT Vk;
 -- } VSC_VK, *PVSC_VK;
-
 -- typedef struct _VK_TO_WCHAR_TABLE {
 --         //PVK_TO_WCHARS1 pVkToWchars; // __ptr64
 --         PVK_TO_WCHARS pVkToWchars; // __ptr64
 --         BYTE nModifications;
 --         BYTE cbSize;
 -- } VK_TO_WCHAR_TABLE, *PVK_TO_WCHAR_TABLE;
-
 -- typedef struct _DEADKEY {
 --         DWORD dwBoth;
 --         WCHAR wchComposed;
 --         USHORT uFlags;
 -- } DEADKEY, *PDEADKEY;
-
 -- typedef struct _VSC_LPWSTR {
 --         BYTE vsc;
 --         WCHAR *pwsz; // __ptr64
 -- } VSC_LPWSTR, *PVSC_LPWSTR;
-
 -- typedef struct tagKbdLayer {
 --         PMODIFIERS pCharModifiers; // __ptr64
 --         PVK_TO_WCHAR_TABLE pVkToWcharTable; // __ptr64
@@ -342,7 +332,7 @@ package Neo.Windows
     --   end record;
     -- type Record_Device_Attributes
     --   is record
-    --     Size    : Integer_4_Unsigned_C := Record_Device_Attributes'Size / 8;
+    --     Size    : Integer_4_Unsigned_C := Record_Device_Attributes'Size / Byte'size;
     --     Vendor  : Integer_2_Unsigned_C := 0;
     --     Product : Integer_2_Unsigned_C := 0;
     --     Version : Integer_2_Unsigned_C := 0;
@@ -357,19 +347,16 @@ package Neo.Windows
 --     SHORT                               sThumbRX;
 --     SHORT                               sThumbRY;
 -- } XINPUT_GAMEPAD, *PXINPUT_GAMEPAD;
-
 -- typedef struct _XINPUT_STATE
 -- {
 --     DWORD                               dwPacketNumber;
 --     XINPUT_GAMEPAD                      Gamepad;
 -- } XINPUT_STATE, *PXINPUT_STATE;
-
 -- typedef struct _XINPUT_VIBRATION
 -- {
 --     WORD                                wLeftMotorSpeed;
 --     WORD                                wRightMotorSpeed;
 -- } XINPUT_VIBRATION, *PXINPUT_VIBRATION;
-
 -- typedef struct _XINPUT_CAPABILITIES
 -- {
 --     BYTE                                type;
@@ -378,15 +365,12 @@ package Neo.Windows
 --     XINPUT_GAMEPAD                      Gamepad;
 --     XINPUT_VIBRATION                    Vibration;
 -- } XINPUT_CAPABILITIES, *PXINPUT_CAPABILITIES;
-
 -- #ifndef XINPUT_USE_9_1_0
-
 -- typedef struct _XINPUT_BATTERY_INFORMATION
 -- {
 --     BYTE BatteryType;
 --     BYTE BatteryLevel;
 -- } XINPUT_BATTERY_INFORMATION, *PXINPUT_BATTERY_INFORMATION;
-
 -- typedef struct _XINPUT_KEYSTROKE
 -- {
 --     WORD    VirtualKey;
@@ -507,7 +491,7 @@ package Neo.Windows
       pragma Convention(C, Record_Keyboard);
     type Record_Memory_Status
       is record
-        Size                       : Integer_4_Unsigned_C := Record_Memory_Status'Size / 8;
+        Size                       : Integer_4_Unsigned_C := Record_Memory_Status'Size / Byte'size;
         Memory_Load                : Integer_4_Unsigned_C := 0;
         Total_Physical             : Integer_8_Unsigned_C := 0;
         Available_Physical         : Integer_8_Unsigned_C := 0;
@@ -520,7 +504,7 @@ package Neo.Windows
       pragma Convention(C, Record_Memory_Status);
     type Record_Version_Information
       is record
-        Size                : Integer_4_Unsigned_C := Record_Version_Information'Size / 8;
+        Size                : Integer_4_Unsigned_C := Record_Version_Information'Size / Byte'size;
         Major               : Integer_4_Unsigned_C := 0;
         Minor               : Integer_4_Unsigned_C := 0;
         Build_Number        : Integer_4_Unsigned_C := 0;
@@ -535,14 +519,14 @@ package Neo.Windows
       pragma Convention(C, Record_Version_Information);
     type Record_Device_Interface
       is record
-        Size     : Integer_4_Unsigned_C        := Record_Device_Interface'Size / 8;
+        Size     : Integer_4_Unsigned_C        := Record_Device_Interface'Size / Byte'size;
         Class_ID : Integer_4_Unsigned_C        := 0;
         Flags    : Integer_4_Unsigned_C        := 0;
         Reserved : Access_Integer_4_Unsigned_C := NULL; -- ULONG_PTR
       end record;
     type Record_Flash_Information
       is record
-        Size     : Integer_4_Unsigned_C := Record_Flash_Information'Size / 8;
+        Size     : Integer_4_Unsigned_C := Record_Flash_Information'Size / Byte'size;
         Window   : Address              := NULL_ADDRESS;
         Flags    : Integer_4_Unsigned_C := 0;
         Count    : Integer_4_Unsigned_C := 0;
@@ -559,7 +543,7 @@ package Neo.Windows
       pragma Convention(C, Record_Rectangle);
     type Record_Monitor_Information
       is record
-        Size      : Integer_4_Unsigned_C := Record_Monitor_Information'Size / 8;
+        Size      : Integer_4_Unsigned_C := Record_Monitor_Information'Size / Byte'size;
         Monitor   : Record_Rectangle     := (others => <>);
         Work_Area : Record_Rectangle     := (others => <>);
         Flags     : Integer_4_Unsigned_C := 0;
@@ -567,7 +551,7 @@ package Neo.Windows
       pragma Convention(C, Record_Monitor_Information);
     type Record_Window_Class
       is record
-        Size       : Integer_4_Unsigned_C          := Record_Window_Class'Size / 8;
+        Size       : Integer_4_Unsigned_C          := Record_Window_Class'Size / Byte'size;
         Style      : Integer_4_Unsigned_C          := 0;
         Callback   : Address                       := NULL_ADDRESS;
         Extra_A    : Integer_4_Signed_C            := 0;
@@ -616,7 +600,7 @@ package Neo.Windows
       pragma Convention(C, Record_GUID);
     type Record_Device_Information
       is record
-        Size       : Integer_4_Unsigned_C := Record_Device_Information'Size / 8;
+        Size       : Integer_4_Unsigned_C := Record_Device_Information'Size / Byte'size;
         Class_GUID : Record_GUID          := (others => <>);
         Instance   : Integer_4_Unsigned_C := 0;
         Reserved   : Address              := NULL_ADDRESS; -- ULONG_PTR
@@ -641,20 +625,84 @@ package Neo.Windows
         Header : Record_Device_Header := (others => <>);
         Data   : Record_Keyboard      := (others => <>);
       end record;
+      pragma Convention(C, Record_Device_Keyboard);
     type Record_Device_Mouse
       is record
         Header : Record_Device_Header := (others => <>);
         Data   : Record_Mouse         := (others => <>);
       end record;
+      pragma Convention(C, Record_Device_Mouse);
+    type Record_Core_Information
+      is record
+        Processor_Mask : Integer_Address                 := 0;
+        Relationship   : Integer_4_Unsigned_C            := 0;
+        Union_Bullshit : Array_Integer_1_Unsigned(1..16) := (others => 0);
+        -- union {
+        --   struct {
+        --     BYTE Flags;
+        --   } ProcessorCore;
+        --   struct {
+        --     DWORD NodeNumber;
+        --   } NumaNode;
+        --   struct {
+        --     BYTE                 Level;
+        --     BYTE                 Associativity;
+        --     WORD                 LineSize;
+        --     DWORD                Size;
+        --     PROCESSOR_CACHE_TYPE Type; enumerated type
+        --   } CACHE_DESCRIPTOR, *PCACHE_DESCRIPTOR;
+        --   ULONGLONG        Reserved[2];}; ULONGLONG is 8 bytes
+      end record;
+      pragma Convention(C, Record_Core_Information);
+    type Record_Process_Information
+      is record
+        Process            : Address              := NULL_ADDRESS;
+        Thread             : Address              := NULL_ADDRESS;
+        Process_Identifier : Integer_4_Unsigned_C := 0;
+        Thread_Identifier  : Integer_4_Unsigned_C := 0;
+      end record;
+      pragma Convention(C, Record_Process_Information);
+    type Record_Startup_Information
+      is record
+        Size               : Integer_4_Unsigned_C        := Record_Startup_Information'size / Byte'size;
+        Reserved           : Access_String_2_C           := null;
+        Desktop            : Access_String_2_C           := null;
+        Title              : Access_String_2_C           := null;
+        X                  : Integer_4_Unsigned_C        := 0;
+        Y                  : Integer_4_Unsigned_C        := 0;
+        X_Size             : Integer_4_Unsigned_C        := 0;
+        Y_Size             : Integer_4_Unsigned_C        := 0;
+        X_Character_Length : Integer_4_Unsigned_C        := 0;
+        Y_Character_Length : Integer_4_Unsigned_C        := 0;
+        Fill_Attribute     : Integer_4_Unsigned_C        := 0;
+        Flags              : Integer_4_Unsigned_C        := 0;
+        Show_Window        : Integer_2_Unsigned_C        := 0;
+        Reserved_A         : Integer_2_Unsigned_C        := 0;
+        Reserved_B         : Access_Integer_1_Unsigned_C := null;
+        Standard_Input     : Address                     := NULL_ADDRESS;
+        Standard_Output    : Address                     := NULL_ADDRESS;
+        Standard_Error     : Address                     := NULL_ADDRESS;
+      end record;
+      pragma Convention(C, Record_Startup_Information);
+    type Record_Security_Attributes
+      is record
+        Length         : Integer_4_Unsigned_C := 0;
+        Descriptor     : Address              := NULL_ADDRESS;
+        Inherit_Handle : Integer_4_Signed_C   := 0;
+      end record;
+      pragma Convention(C, Record_Security_Attributes);
   ------------
   -- Arrays --
   ------------
     type Array_Record_Device_List_Element
-      is array (Positive range <>)
+      is array(Positive range <>)
       of Record_Device_List_Element;
     type Array_Record_Device_Setup
-      is array (Positive range <>)
+      is array(Positive range <>)
       of Record_Device_Setup;
+    type Array_Record_Core_Information
+      is array(Positive range <>)
+      of Record_Core_Information;
   ---------------
   -- Accessors --
   ---------------
@@ -662,6 +710,8 @@ package Neo.Windows
     --   is access all Record_Device_List;
     -- type Access_Array_Record_Device_List
     --   is access all Array_Record_Device_List;
+    type Access_Record_Version_Information
+      is access all Record_Version_Information;
     type Access_Record_Memory_Status
       is access all Record_Memory_Status;
     type Access_Record_Key
@@ -672,21 +722,31 @@ package Neo.Windows
       is access all Record_Rectangle;
     type Access_Record_Monitor_Information
       is access all Record_Monitor_Information;
+    type Access_Array_Record_Core_Information
+      is access all Array_Record_Core_Information;
+    type Access_Record_Startup_Information
+      is access all Record_Startup_Information;
+    type Access_Record_Process_Information
+      is access all Record_Process_Information;
+    type Access_Record_Security_Attributes
+      is access all Record_Security_Attributes;
   -----------------
   -- Subprograms --
   -----------------
     function To_Integer_4_Signed_C
-      is NEW Ada.Unchecked_Conversion(Access_Record_Mouse, Integer_4_Signed_C);
+      is new Ada.Unchecked_Conversion(Access_Record_Mouse, Integer_4_Signed_C);
     function To_Integer_4_Signed_C
-      is NEW Ada.Unchecked_Conversion(Access_Record_Key, Integer_4_Signed_C);
+      is new Ada.Unchecked_Conversion(Access_Record_Key, Integer_4_Signed_C);
     function To_Access_Record_Rectangle
-      is NEW Ada.Unchecked_Conversion(Address, Access_Record_Rectangle);
+      is new Ada.Unchecked_Conversion(Address, Access_Record_Rectangle);
     function To_Access_Record_Key
-      is NEW Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Key);
+      is new Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Key);
     function To_Access_Record_Rectangle
-      is NEW Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Rectangle);
+      is new Ada.Unchecked_Conversion(Integer_4_Signed_C, Access_Record_Rectangle);
     function Get_Blank_Cursor
       return Array_Integer_1_Unsigned;
+    procedure Put_Last_Error(
+      Prefix : in String_2 := "Last error: ");
     -- DWORD WINAPI XInputGetState
     -- (
     --     DWORD         dwUserIndex,  // Index of the gamer associated WITH the device
@@ -758,6 +818,22 @@ package Neo.Windows
     --   Window_Parent : in Address;
     --   Flags         : in Integer_4_Unsigned_C)
     --   return Address;
+    function Create_Process(
+      Application_Name    : in Access_Constant_Character_2_C;
+      Command_Line        : in Access_Character_2_C;
+      Process_Attributes  : in Access_Record_Security_Attributes;
+      Thread_Attributes   : in Access_Record_Security_Attributes;
+      Inherit_Handles     : in Integer_4_Signed_C;
+      Creation_Flags      : in Integer_4_Unsigned_C;
+      Environment         : in Address;
+      Current_Directory   : in Access_Constant_Character_2_C;
+      Startup_Information : in Access_Record_Startup_Information;
+      Process_Information : in Access_Record_Process_Information)
+      return Integer_4_Signed_C;
+    function Get_Core_Information(
+      Buffer        : in Access_Array_Record_Core_Information;
+      Return_Length : in Access_Integer_4_Unsigned_C)
+      return Integer_4_Signed_C;
     function Is_Running_In_Emulated_32_Bit(
       Process : in Address;
       Result  : in Access_Integer_4_Signed_C)
@@ -780,10 +856,10 @@ package Neo.Windows
     function Registry_Query_Value(
       Key        : in Address;
       Value_Name : in String_2_C;
-      Reserved   : in Address;
-      Kind       : in Address;
+      Reserved   : in Access_Integer_4_Unsigned_C;
+      Kind       : in Access_Integer_4_Unsigned_C;
       Data       : in Address;
-      Data_Size  : in Address)
+      Data_Size  : in Access_Integer_4_Unsigned_C)
       return Integer_4_Unsigned_C;
     function Get_Device_Usages(
       Kind            : in Integer_4_Signed_C; -- Enumerated
@@ -889,11 +965,11 @@ package Neo.Windows
       Index  : in Integer_4_Signed_C)
       return Integer_4_Unsigned_C;
     function Get_Version(
-      Version_Information : in Address)
+      Version_Information : in Access_Record_Version_Information)
       return Integer_4_Signed_C;
-    function Get_User_Name(
-      Buffer : Address;
-      Size   : Address)
+    function Get_Username(
+      Buffer : Access_String_2_C;
+      Size   : Access_Integer_4_Signed_C)
       return Integer_4_Signed_C;
     function Create_Cursor(
       Instance   : in Address;
@@ -957,7 +1033,7 @@ package Neo.Windows
       Parameters   : in Access_Constant_Character_2_C;
       Directory    : in Access_Constant_Character_2_C;
       Show_Command : in Integer_4_Signed_C)
-      return Address;
+      return Integer_Address;
     function Set_Process_Working_Set_Size(
       Process : in Address;
       Minimum : in Integer_Size_C;
@@ -1047,14 +1123,14 @@ package Neo.Windows
       return Address;
     function Get_Process_Affinity_Mask(
       Process               : in Address;
-      Process_Affinity_Mask : in Address;
-      System_Affinity_Mask  : in Address)
+      Process_Affinity_Mask : in Access_Integer_Address;
+      System_Affinity_Mask  : in Access_Integer_Address)
       return Integer_4_Signed_C;
     function Query_Performance_Counter(
-      Performance_Count : in Address)
+      Performance_Count : in Access_Integer_8_Unsigned_C)
       return Integer_4_Signed_C;
     function Query_Performance_Frequency(
-      Frequency : in Address)
+      Frequency : in Access_Integer_8_Unsigned_C)
       return Integer_4_Signed_C;
     function Get_Last_Error
       return Integer_4_Unsigned_C;
@@ -1228,10 +1304,12 @@ private
     --pragma Import(Stdcall, Write_File,                     "WriteFile");
     --pragma Import(Stdcall, Convert_String_2_C_To_UTF_8,    "WideCharToMultiByte");
     --pragma Import(Stdcall, Enumerate_Device_Interfaces,    "SetupDiEnumDeviceInterfaces");
+    pragma Import(Stdcall, Create_Process,                 "CreateProcessW");
     pragma Import(Stdcall, Registry_Close_Key,             "RegCloseKey");
     pragma Import(Stdcall, Registry_Query_Value,           "RegQueryValueExW");
     pragma Import(Stdcall, Registry_Open_Key,              "RegOpenKeyExW");
     pragma Import(Stdcall, Create_File,                    "CreateFileW");
+    pragma Import(Stdcall, Get_Core_Information,           "GetLogicalProcessorInformation");
     pragma Import(Stdcall, Destroy_Device_List,            "SetupDiDestroyDeviceInfoList");
     --pragma Import(Stdcall, Get_Device_Interface_Detail,    "SetupDiGetDeviceInterfaceDetail");
     pragma Import(Stdcall, Get_Device_Registry_Property,   "SetupDiGetDeviceRegistryPropertyW");
@@ -1258,7 +1336,7 @@ private
     pragma Import(Stdcall, Get_Client_Rectangle,           "GetClientRect");
     pragma Import(Stdcall, Get_Class_Setting,              "GetClassLongW");
     pragma Import(Stdcall, Get_Version,                    "GetVersionExW");
-    pragma Import(Stdcall, Get_User_Name,                  "GetUserNameW");
+    pragma Import(Stdcall, Get_Username,                   "GetUserNameW");
     pragma Import(Stdcall, Create_Cursor,                  "CreateCursor");
     pragma Import(Stdcall, Change_Class_Setting,           "SetClassLongW");
     pragma Import(Stdcall, Flash_Window,                   "FlashWindowEx");
